@@ -1,0 +1,25 @@
+# Deel 1.1
+1: 'Den Helder', 'Alkmaar', 'Castricum', 'Zaandam', 'Amsterdam Sloterdijk', 'Amsterdam Centraal', 'Amsterdam Amstel', 'Amsterdam Zuid', 'Schiphol Airport', 'Leiden Centraal', 'Den Haag Centraal'
+    Tijdsduur: 120 
+2: 'Dordrecht', 'Rotterdam Centraal', 'Schiedam Centrum', 'Delft'
+    Tijdsduur: 29 
+3: 'Hoorn', 'Alkmaar'
+    Tijdsduur: 24 
+4: 'Beverwijk', 'Haarlem', 'Heemstede-Aerdenhout'
+    Tijdsduur: 22 
+5: 'Rotterdam Alexander', 'Gouda', 'Alphen a/d Rijn'
+    Tijdsduur: 29
+
+Kwaliteit: 9276.0
+
+# Deel 1.2 (Heuristiek 2)
+1: 'Den Helder', 'Alkmaar', 'Castricum', 'Zaandam', 'Amsterdam Sloterdijk', 'Amsterdam Centraal', 'Amsterdam Amstel', 'Amsterdam Zuid', 'Schiphol Airport' 
+    Tijdsduur: 93 
+2: 'Dordrecht', 'Rotterdam Centraal', 'Schiedam Centrum', 'Delft', 'Den Haag Centraal', 'Leiden Centraal', 'Heemstede-Aerdenhout', 'Haarlem', 'Beverwijk' 
+    Tijdsduur: 89 
+3: 'Hoorn', 'Alkmaar'
+    Tijdsduur: 24 
+4: 'Alphen a/d Rijn', 'Gouda', 'Rotterdam Alexander'
+    Tijdsduur: 29
+
+Kwaliteit: 9365.0
