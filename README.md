@@ -9,8 +9,8 @@ This Readme.md gives a short explenation about the RailNL case.
 ### Method
 
 ### Testing
-To run the code, use the following instruction:\
-<pre> python code.py <pre>
+To run the code, use the following instruction:
+<pre> python code.py </pre>
 
 
 ## Authors
