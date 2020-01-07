@@ -6,6 +6,8 @@ This Readme.md gives a short explenation about the RailNL case.
 
 ### Prerequisites
 
+<pre> pip install -r requirements.txt </pre>
+
 ### Method
 
 ### Testing
@@ -14,9 +16,10 @@ To run the code, use the following instruction:
 
 
 ## Authors
-Tom van Rooijen\
-Gaby Hageman\
-Perry Plooij
+* Gaby Hageman\
+* Perry Plooij\
+* Tom van Rooijen
+
 
 ## Acknowledgement
 
