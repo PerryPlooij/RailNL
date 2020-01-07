@@ -5,9 +5,10 @@ This Readme.md gives a short explanation about the RailNL case.
 ![Rail Map](doc/Rail_Map.png)
 
 ### Assignment
-The assignment of this project is to create an algorithm within python that creates a train lining system that optimizes the overall quality of the lining system. This can be done by maximizing the objective function(K = p*10000 - (T*100 + Min)) given in the excercise.
+The assignment of this project is to create an algorithm within python that generates a train lining system that optimizes the overall quality of the lining system. This can be done by maximizing the objective function given in the excercise.
 
 ### Method
+
 
 
 ### Prerequisites
