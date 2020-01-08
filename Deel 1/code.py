@@ -63,7 +63,7 @@ class Routes():
                     best_stop_time = time_traject
                     best_stop_city = connection
             
-            if best_stop_city != "":
+            if best_stop_city != '':
                 time += best_stop_time
                 endtime = time
                 city = best_stop_city
