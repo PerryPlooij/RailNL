@@ -40,7 +40,8 @@ Dictionary: traject met alle stations als lijst en de totale tijd
 - Bepaling startoplossing:
 Trajecten maken met de beginstations, daarna overige stations
 Dichtstbijzijnde station
-Station in 1 traject 
+Station in 1 traject *
+* Als een traject uit 1 station zou bestaan, wordt het dichtstbijzijnde gekozen
 
 Startoplossing:
 - Deel 1:
