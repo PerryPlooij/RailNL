@@ -23,7 +23,6 @@ class Routes():
                 if len(value) == 1:
                     self.startend.append(key)
 
-
     def startsolution(self, maxtime):
         count = 1
         self.trajects = {}
@@ -47,12 +46,14 @@ class Routes():
         endtime = 0
         time = 0
         traject = []
+
         traject.append(city)
         self.stations.remove(city)
 
         while time < maxtime and count <= 7:
             best_stop_time = 100
             best_stop_city = ""
+
             for connection in self.connections[city]:
                 time_traject = int(self.connections[city][connection])
 
@@ -101,11 +102,10 @@ class Routes():
 
         while maxtime <= 120:
             solution = self.startsolution(maxtime)
+
             if solution > solution_old:
                 solution_old = solution
                 best_traject = self.trajects
-                print(solution_old)
-                print(best_traject)
             maxtime += 1
 
 

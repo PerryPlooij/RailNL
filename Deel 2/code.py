@@ -22,7 +22,7 @@ class Routes():
             for key, value in self.connections.items():
                 if len(value) == 1:
                     self.startend.append(key)
-
+                    
 
     def startsolution(self, maxtime):
         count = 1
@@ -48,6 +48,7 @@ class Routes():
         endtime = 0
         time = 0
         traject = []
+
         traject.append(city)
         self.stations.remove(city)
 
@@ -105,9 +106,10 @@ class Routes():
             if solution > solution_old:
                 solution_old = solution
                 best_traject = self.trajects
-                print(solution_old)
-                print(best_traject)
             maxtime += 1
+
+        # print(solution_old)
+        # print(best_traject)
 
 
 if __name__ == "__main__": 
