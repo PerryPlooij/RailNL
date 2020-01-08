@@ -1,4 +1,5 @@
 import csv
+import matplotlib.pyplot as plt
 
 class Routes():
     def __init__(self):
@@ -22,6 +23,7 @@ class Routes():
             for key, value in self.connections.items():
                 if len(value) == 1:
                     self.startend.append(key)
+                    
 
     def startsolution(self, maxtime):
         count = 1
