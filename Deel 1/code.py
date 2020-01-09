@@ -23,7 +23,7 @@ class Routes():
             for key, value in self.connections.items():
                 if len(value) == 1:
                     self.startend.append(key)
-                    
+
 
     def startsolution(self, maxtime):
         count = 1
