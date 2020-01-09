@@ -12,6 +12,16 @@
 
 Kwaliteit: 9276.0
 
+# Deel 1.1 Alles random
+Maxtime: 109
+1: 'Rotterdam Alexander', 'Gouda', 'Alphen a/d Rijn', 'Leiden Centraal', 'Den Haag Centraal', 'Delft', 'Schiedam Centrum', 'Rotterdam Centraal', 'Dordrecht'
+    Tijdsduur: 97
+2: 'Heemstede-Aerdenhout', 'Haarlem', 'Beverwijk', 'Castricum', 'Alkmaar', 'Den Helder'
+    Tijdsduur 80 
+3: 'Schiphol Airport', 'Amsterdam Zuid', 'Amsterdam Amstel', 'Amsterdam Centraal', 'Amsterdam Sloterdijk', 'Zaandam', 'Hoorn'
+    Tijdsduur: 62
+9461.0
+
 # Deel 1.2 (Heuristiek 2)
 1: 'Den Helder', 'Alkmaar', 'Castricum', 'Zaandam', 'Amsterdam Sloterdijk', 'Amsterdam Centraal', 'Amsterdam Amstel', 'Amsterdam Zuid', 'Schiphol Airport' 
     Tijdsduur: 93 

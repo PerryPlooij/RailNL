@@ -23,3 +23,28 @@
     Tijdsduur: 14
 
 Kwaliteit: 8081
+
+# Deel 2.1 Alles random
+Maxtime: 146
+1: 'Maastricht', 'Sittard', 'Heerlen' 
+    Tijdsduur: 30
+2: 'Schiphol Airport', 'Leiden Centraal', 'Den Haag Laan v NOI', 'Delft', 'Den Haag Centraal', 'Gouda', 'Den Haag HS' 
+    Tijdsduur: 88 
+3: 'Amersfoort', 'Utrecht Centraal', 'Alphen a/d Rijn' 
+    Tijdsduur: 42 
+4: 'Amsterdam Centraal', 'Amsterdam Sloterdijk', 'Amsterdam Zuid', 'Amsterdam Amstel', 'Hilversum', 'Almere Centrum', 'Lelystad Centrum' 
+    Tijdsduur: 100
+5: 'Assen', 'Groningen', 'Leeuwarden', 'Heerenveen', 'Steenwijk', 'Zwolle' 
+    Tijdsduur: 106
+6: 'Vlissingen', 'Roosendaal', 'Etten-Leur', 'Breda', 'Dordrecht', 'Rotterdam Centraal', 'Schiedam Centrum', 'Rotterdam Blaak', 'Rotterdam Alexander' 
+    Tijdsduur: 141 
+7: 'Ede-Wageningen', 'Arnhem Centraal', 'Nijmegen', 'Oss', 's-Hertogenbosch', 'Tilburg', 'Eindhoven', 'Helmond', 'Venlo' 
+    Tijdsduur: 124
+8: 'Roermond', 'Weert' 
+    Tijdsduur: 14 
+9: 'Dieren', 'Zutphen', 'Apeldoorn', 'Deventer', 'Almelo', 'Hengelo', 'Enschede' 
+    Tijdsduur: 79 
+10: 'Den Helder', 'Alkmaar', 'Hoorn', 'Zaandam', 'Castricum', 'Beverwijk', 'Haarlem', 'Heemstede-Aerdenhout' 
+    Tijdsduur: 133
+
+Kwaliteit: 8143.0
