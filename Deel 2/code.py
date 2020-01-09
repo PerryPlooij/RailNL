@@ -28,6 +28,7 @@ class Routes():
             reader = csv.reader(csv_file, delimiter='.')
             for row in reader:
                 self.coordinates[row[0]] = row[1], row[2]
+        print(self.coordinates)
 
     def startsolution(self, maxtime):
         count = 1
@@ -112,8 +113,7 @@ class Routes():
                 solution_old = solution
                 best_traject = self.trajects
             maxtime += 1
-        print(solution_old)
-        print(best_traject)
+
 
 if __name__ == "__main__": 
     routes = Routes()

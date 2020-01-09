@@ -7,18 +7,18 @@ class Routes():
         self.connections = {}
         self.total = []
 
-        with open('Bijlage/ConnectiesHolland.csv', 'rt') as csv_file:
+        with open('Bijlage/ConnectiesNationaal.csv', 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
             for row in reader: 
                 if row[0] not in self.connections:
                     self.connections[row[0]] = {}
                     self.total.append(row[0])
-                self.connections[row[0]][row[1]] = row[2]
+                self.connections[row[0]][row[1]] = int(float(row[2]))
 
                 if row[1] not in self.connections:
                     self.connections[row[1]] = {}
                     self.total.append(row[1])
-                self.connections[row[1]][row[0]] = row[2]
+                self.connections[row[1]][row[0]] = int(float(row[2]))
 
 
     def randomsolution(self):
@@ -29,11 +29,11 @@ class Routes():
 
         while randomcount <= 10000:
             maxtime = 0
-            while maxtime <= 120:
+            while maxtime <= 180:
                 count = 1
                 self.trajects = {}
                 self.stations = self.total.copy()
-                while len(self.stations) != 0 and count <= 7:
+                while len(self.stations) != 0 and count <= 20:
                     city = random.choice(self.stations)
                     self.maketraject(city, count, maxtime)
                     count += 1
@@ -51,6 +51,7 @@ class Routes():
         print(besttraject)
         print(bestquality)
 
+
     def maketraject(self, city, count, maxtime):
         endtime = 0
         time = 0
@@ -59,7 +60,7 @@ class Routes():
         traject.append(city)
         self.stations.remove(city)
 
-        while time < maxtime and count <= 7:
+        while time < maxtime and count <= 20:
             best_stop_time = 100
             best_stop_city = ""
             add = False
@@ -102,6 +103,7 @@ class Routes():
         self.trajects[count] = (traject, endtime)
         return self.trajects
     
+
     def quality(self):
         minutes = 0
         p = 1 - len(self.stations) / 22
