@@ -1,3 +1,11 @@
+# *************************************************************************************************
+# * code.py
+# *
+# * PGT Party
+# *
+# * 
+# *************************************************************************************************
+
 import csv
 import matplotlib.pyplot as plt
 
@@ -6,8 +14,12 @@ class Routes():
         self.connections = {}
         self.startend = []
         self.total = []
+        self.connectiesholland('Bijlage/ConnectiesHolland.csv')
 
-        with open('Bijlage/ConnectiesHolland.csv', 'rt') as csv_file:
+    def connectiesholland(self, allconnections):
+        """ Reading csv with connections of every station. """
+
+        with open(allconnections, 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
             for row in reader: 
                 if row[0] not in self.connections:
@@ -20,6 +32,7 @@ class Routes():
                     self.total.append(row[1])
                 self.connections[row[1]][row[0]] = row[2]
 
+            # Create a list with all startstations.
             for key, value in self.connections.items():
                 if len(value) == 1:
                     self.startend.append(key)
