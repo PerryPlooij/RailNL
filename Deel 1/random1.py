@@ -1,7 +1,17 @@
+# *************************************************************************************************
+# * code.py (deel 1)
+# *
+# * PGT Party
+# *
+# * Random startoplossing.
+# *************************************************************************************************
+
+
+import copy
 import csv
 import random
-import copy
 import time
+
 import matplotlib.pyplot as plt
 
 

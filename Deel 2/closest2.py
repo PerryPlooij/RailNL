@@ -1,47 +1,47 @@
 # *************************************************************************************************
-# * code.py
+# * code.py (deel 2)
 # *
 # * PGT Party
 # *
-# * 
+# * Startoplossing met telkens de dichtstbijzijnde stations gekozen beginnend met de startstations.
 # *************************************************************************************************
 
+
 import csv
-import matplotlib.pyplot as plt
 
 class Routes():
     def __init__(self):
         self.connections = {}
         self.startend = []
         self.total = []
-        self.connectiesholland('Bijlage/ConnectiesHolland.csv')
+        self.coordinates = {}
 
-    def connectiesholland(self, connectionsholland):
-        """ Reading csv with connections of every station. """
-
-        with open(connectionsholland, 'rt') as csv_file:
+        with open('Bijlage/ConnectiesNationaal.csv', 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
             for row in reader: 
                 if row[0] not in self.connections:
                     self.connections[row[0]] = {}
                     self.total.append(row[0])
-                self.connections[row[0]][row[1]] = row[2]
+                self.connections[row[0]][row[1]] = int(float(row[2]))
 
                 if row[1] not in self.connections:
                     self.connections[row[1]] = {}
                     self.total.append(row[1])
-                self.connections[row[1]][row[0]] = row[2]
+                self.connections[row[1]][row[0]] = int(float(row[2]))
 
-            # Create a list with all startstations.
             for key, value in self.connections.items():
                 if len(value) == 1:
                     self.startend.append(key)
 
+        with open('Bijlage/StationsNationaal.csv', 'rt') as csv_file:
+            reader = csv.reader(csv_file, delimiter='.')
+            for row in reader:
+                self.coordinates[row[0]] = row[1], row[2]
+        print(self.coordinates)
 
     def startsolution(self, maxtime):
         count = 1
         self.trajects = {}
-        self.allconnections = self.connections.copy
         self.stations = self.total.copy()
         self.start_end = self.startend.copy()
 
@@ -49,14 +49,15 @@ class Routes():
         for city in self.start_end:
             self.maketraject(city, count, maxtime)
             count += 1
-
+            
         # Overige routes
         while len(self.stations) != 0:
             for city in self.stations:
                 self.maketraject(city, count, maxtime)
                 count += 1
-
+                
         return self.quality()
+
 
     def maketraject(self, city, count, maxtime):
         endtime = 0
@@ -66,10 +67,9 @@ class Routes():
         traject.append(city)
         self.stations.remove(city)
 
-        while time < maxtime and count <= 7:
+        while time < maxtime and count <= 20:
             best_stop_time = 100
             best_stop_city = ""
-
             for connection in self.connections[city]:
                 time_traject = int(self.connections[city][connection])
 
@@ -116,16 +116,14 @@ class Routes():
         solution_old = 0
         best_traject = {}
 
-        while maxtime <= 120:
+        while maxtime <= 180:
             solution = self.startsolution(maxtime)
-
             if solution > solution_old:
                 solution_old = solution
                 best_traject = self.trajects
             maxtime += 1
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": 
     routes = Routes()
     routes.heuristiek()
-        
