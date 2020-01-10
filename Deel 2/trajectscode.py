@@ -1,23 +1,24 @@
 import csv
 import random
+import copy
 import matplotlib.pyplot as plt
+
 
 class Routes():
     def __init__(self):
         self.connections = {}
-        self.total = []
+        self.verbinding = 0
 
         with open('Bijlage/ConnectiesNationaal.csv', 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
             for row in reader: 
+                self.verbinding += 1
                 if row[0] not in self.connections:
                     self.connections[row[0]] = {}
-                    self.total.append(row[0])
                 self.connections[row[0]][row[1]] = int(float(row[2]))
 
                 if row[1] not in self.connections:
                     self.connections[row[1]] = {}
-                    self.total.append(row[1])
                 self.connections[row[1]][row[0]] = int(float(row[2]))
 
 
@@ -26,15 +27,17 @@ class Routes():
         bestquality = 0
         besttime = 0
         besttraject = None
+        t_end = time.time() + 60 * 0.5
 
-        while randomcount <= 10000:
+        while time.time() < t_end:
             maxtime = 0
             while maxtime <= 180:
                 count = 1
                 self.trajects = {}
-                self.stations = self.total.copy()
-                while len(self.stations) != 0 and count <= 20:
-                    city = random.choice(self.stations)
+                self.allconnections = copy.deepcopy(self.connections)
+                self.verbindingcopy = copy.deepcopy(self.verbinding)
+                while len(self.allconnections.keys()) != 0 and count <= 20:
+                    city = random.choice(list(self.allconnections.keys()))
                     self.maketraject(city, count, maxtime)
                     count += 1
 
@@ -45,12 +48,9 @@ class Routes():
                 maxtime += 1
 
             randomcount += 1
-            # print(self.trajects)
-            # print(self.quality())
-        print(besttime)
+
         print(besttraject)
         print(bestquality)
-
 
     def maketraject(self, city, count, maxtime):
         endtime = 0
@@ -58,42 +58,41 @@ class Routes():
         traject = []
 
         traject.append(city)
-        self.stations.remove(city)
-
-        while time < maxtime and count <= 20:
+        
+        while time < maxtime and count <= 20 and city in self.allconnections:
             best_stop_time = 100
             best_stop_city = ""
             add = False
 
-            while add == False:
+            for i in range(len(self.allconnections[city])):
                 aantal = 0
-                connection = random.choice(list(self.connections[city]))
-                time_traject = int(self.connections[city][connection])
+                connection = random.choice(list(self.allconnections[city]))
+                time_traject = int(self.allconnections[city][connection])
 
-                for items in self.connections[city]:
-                    if items not in self.stations:
-                        aantal += 1
-                
-                if aantal != len(self.connections[city]):
-                    if connection in self.stations and time + time_traject <= maxtime:
-                        add = True
-                        best_stop_time = time_traject
-                        best_stop_city = connection
-                    elif time + time_traject > maxtime:
-                        add = True
-                else:
-                    add = True
-
+                if time + time_traject <= maxtime:
+                    best_stop_time = time_traject
+                    best_stop_city = connection
+                    break
+        
             if best_stop_city != '':
                 time += best_stop_time
                 endtime = time
+                del self.allconnections[city][connection]
+                del self.allconnections[connection][city]
+                self.verbindingcopy = self.verbindingcopy - 1
+
+                if len(self.allconnections[city]) == 0:
+                    del self.allconnections[city]
+
+                if len(self.allconnections[connection]) == 0:
+                    del self.allconnections[connection]
+
                 city = best_stop_city
                 traject.append(city)
-                self.stations.remove(city)
             else:
                 endtime = time
                 time = maxtime
-
+            
             if len(traject) == 1:
                 connections = self.connections[traject[0]]
                 endcity = min(connections, key=lambda k: connections[k])
@@ -101,12 +100,11 @@ class Routes():
                 traject.append(endcity)
 
         self.trajects[count] = (traject, endtime)
-        return self.trajects
-    
+
 
     def quality(self):
         minutes = 0
-        p = 1 - len(self.stations) / 22
+        p = 1 - self.verbindingcopy / self.verbinding
         T = len(self.trajects)
 
         for key, value in self.trajects.items():
@@ -115,7 +113,6 @@ class Routes():
         K = p * 10000 - (T * 100 + minutes)
         return K
 
-    
 if __name__ == "__main__":
     routes = Routes()
     routes.randomsolution()

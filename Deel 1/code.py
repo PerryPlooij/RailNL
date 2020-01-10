@@ -16,10 +16,10 @@ class Routes():
         self.total = []
         self.connectiesholland('Bijlage/ConnectiesHolland.csv')
 
-    def connectiesholland(self, allconnections):
+    def connectiesholland(self, connectionsholland):
         """ Reading csv with connections of every station. """
 
-        with open(allconnections, 'rt') as csv_file:
+        with open(connectionsholland, 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
             for row in reader: 
                 if row[0] not in self.connections:
@@ -41,6 +41,7 @@ class Routes():
     def startsolution(self, maxtime):
         count = 1
         self.trajects = {}
+        self.allconnections = self.connections.copy
         self.stations = self.total.copy()
         self.start_end = self.startend.copy()
 
