@@ -14,6 +14,8 @@ import time
 
 import matplotlib.pyplot as plt
 
+from coordinates import Stations
+
 
 class Routes():
     def __init__(self):
@@ -32,15 +34,25 @@ class Routes():
                     self.connections[row[1]] = {}
                 self.connections[row[1]][row[0]] = int(float(row[2]))
 
+        with open('Bijlage/StationsNationaal.csv', 'rt') as csv_file:
+            reader = csv.reader(csv_file, delimiter='.')
+            self.stations = {}
+
+            for row in reader:
+                if row[0] not in self.stations:
+                    self.stations[row[0]] = (row[1],row[2])
+            print(self.stations)
+
 
     def randomsolution(self):
         randomcount = 0
         bestquality = 0
         besttime = 0
         besttraject = None
-        t_end = time.time() + 60 * 0.5
+        # t_end = time.time() + 60 * 30
 
-        while time.time() < t_end:
+        # while time.time() < t_end:
+        while randomcount < 1:
             maxtime = 0
             while maxtime <= 180:
                 count = 1
@@ -60,8 +72,9 @@ class Routes():
 
             randomcount += 1
 
-        print(besttraject)
+        # print(besttraject)
         print(bestquality)
+        self.visualisation(besttraject)
 
     def maketraject(self, city, count, maxtime):
         endtime = 0
@@ -123,6 +136,11 @@ class Routes():
 
         K = p * 10000 - (T * 100 + minutes)
         return K
+
+    def visualisation(self, traject):
+        pass
+        # print(traject)
+
 
 if __name__ == "__main__":
     routes = Routes()
