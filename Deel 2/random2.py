@@ -14,7 +14,7 @@ import time
 
 import matplotlib.pyplot as plt
 
-from coordinates import Stations
+#from coordinates import Stations
 
 
 class Routes():
@@ -35,13 +35,13 @@ class Routes():
                 self.connections[row[1]][row[0]] = int(float(row[2]))
 
         with open('Bijlage/StationsNationaal.csv', 'rt') as csv_file:
-            reader = csv.reader(csv_file, delimiter='.')
+            reader = csv.reader(csv_file, delimiter=',')
             self.stations = {}
 
             for row in reader:
                 if row[0] not in self.stations:
-                    self.stations[row[0]] = (row[1],row[2])
-            print(self.stations)
+                    self.stations[row[0]] = (float(row[2]),float(row[1]))
+            #print(self.stations)
 
 
     def randomsolution(self):
@@ -73,7 +73,7 @@ class Routes():
             randomcount += 1
 
         # print(besttraject)
-        print(bestquality)
+        #print(bestquality)
         self.visualisation(besttraject)
 
     def maketraject(self, city, count, maxtime):
@@ -138,10 +138,40 @@ class Routes():
         return K
 
     def visualisation(self, traject):
-        pass
-        # print(traject)
+        colors = ["green", "red", "aqua", "orange", "yellow", "lawngreen", "deepskyblue", "violet", "pink", "deeppink", "darkviolet", "grey", "salmon", "gold", "mediumseagreen", "mediumturquoise", "darkkhaki", "lightgoldenrodyellow", "silver", "navy"]
+        counter = 0
+        perrys = []
+        img = plt.imread("../doc/kaart.png")
+        fix, ax = plt.subplots()
+        ax.imshow(img, extent=[3.1, 7.3, 50.1, 53.9])
+        print(traject)
+        for value in traject.items():
+            perry = "traject"
+            x_coor = []
+            y_coor = []
+            #print(value[1][0])
+            for stations in value[1][0]:
+                #print(self.stations[stations])
+                x_coor.append(self.stations[stations][0])
+                y_coor.append(self.stations[stations][1])
+            
+            ax.plot(x_coor, y_coor, color=colors[counter], linestyle='dashed', marker='o' )
+            
+            perrys.append(counter)
+            counter += 1 
+
+        for value in traject.items():
+            for stations in value[1][0]:
+                plt.annotate(stations, (self.stations[stations][0], self.stations[stations][1]), fontsize=6)
+        
+        
+        #ax.title('Lijnvoering NL')
+        
+        #ax.legend(perrys, loc='best')
+        plt.show()
 
 
+    
 if __name__ == "__main__":
     routes = Routes()
     routes.randomsolution()
