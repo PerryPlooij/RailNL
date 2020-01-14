@@ -49,10 +49,10 @@ class Routes():
         bestquality = 0
         besttime = 0
         besttraject = None
-        # t_end = time.time() + 60 * 30
+        t_end = time.time() + 60 * 0.1
 
-        # while time.time() < t_end:
-        while randomcount < 1:
+        while time.time() < t_end:
+        # while randomcount < 100:
             maxtime = 0
             while maxtime <= 180:
                 count = 1
@@ -72,8 +72,12 @@ class Routes():
 
             randomcount += 1
 
+        for value in besttraject.items():
+            if len(value[1][0]) < 4:
+                print(value[1][0])
+
         # print(besttraject)
-        #print(bestquality)
+        # print(bestquality)
         self.visualisation(besttraject)
 
     def maketraject(self, city, count, maxtime):
@@ -139,35 +143,29 @@ class Routes():
 
     def visualisation(self, traject):
         colors = ["green", "red", "aqua", "orange", "yellow", "lawngreen", "deepskyblue", "violet", "pink", "deeppink", "darkviolet", "grey", "salmon", "gold", "mediumseagreen", "mediumturquoise", "darkkhaki", "lightgoldenrodyellow", "silver", "navy"]
-        counter = 0
-        perrys = []
         img = plt.imread("../doc/kaart.png")
         fix, ax = plt.subplots()
-        ax.imshow(img, extent=[3.1, 7.3, 50.1, 53.9])
-        print(traject)
-        for value in traject.items():
-            perry = "traject"
-            x_coor = []
-            y_coor = []
-            #print(value[1][0])
-            for stations in value[1][0]:
-                #print(self.stations[stations])
-                x_coor.append(self.stations[stations][0])
-                y_coor.append(self.stations[stations][1])
-            
-            ax.plot(x_coor, y_coor, color=colors[counter], linestyle='dashed', marker='o' )
-            
-            perrys.append(counter)
-            counter += 1 
+        ax.imshow(img, extent=[3.1, 7.5, 50.6, 53.7])
+        counter = 0
+        legenda = []
 
         for value in traject.items():
+            x_coor = []
+            y_coor = []
             for stations in value[1][0]:
-                plt.annotate(stations, (self.stations[stations][0], self.stations[stations][1]), fontsize=6)
-        
-        
-        #ax.title('Lijnvoering NL')
-        
-        #ax.legend(perrys, loc='best')
+                x_coor.append(self.stations[stations][0])
+                y_coor.append(self.stations[stations][1])
+
+            ax.plot(x_coor, y_coor, color=colors[counter], linestyle='dashed', marker='o', markersize=3)
+            counter += 1
+            legenda.append(counter) 
+
+        # for value in traject.items():
+        #     for stations in value[1][0]:
+        #         plt.annotate(stations, (self.stations[stations][0], self.stations[stations][1]), fontsize=6)
+
+        plt.title('Lijnvoering NL')
+        ax.legend(legenda, loc="best")
         plt.show()
 
 

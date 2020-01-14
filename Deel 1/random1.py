@@ -31,15 +31,26 @@ class Routes():
                 if row[1] not in self.connections:
                     self.connections[row[1]] = {}
                 self.connections[row[1]][row[0]] = row[2]
+        
+        with open('Bijlage/StationsNationaal.csv', 'rt') as csv_file:
+            reader = csv.reader(csv_file, delimiter=',')
+            self.stations = {}
+
+            for row in reader:
+                if row[0] not in self.stations:
+                    self.stations[row[0]] = (float(row[2]),float(row[1]))
+            #print(self.stations)
 
 
     def randomsolution(self):
+        randomcount = 0
         bestquality = 0
         besttime = 0
         besttraject = None
         t_end = time.time() + 60 * 0.5
 
         while time.time() < t_end:
+        # while randomcount < 1:
             maxtime = 0
             while maxtime <= 120:
                 count = 1
@@ -56,24 +67,24 @@ class Routes():
                     besttraject = self.trajects
                     besttime = maxtime
                 maxtime += 1
+            randomcount += 1
 
         print(besttraject)
         print(bestquality)
+        self.visualisation(besttraject)
 
-    def maketraject(self, city, count, maxtime):
+    def maketraject(self, city, maxtime):
         endtime = 0
         time = 0
         traject = []
 
         traject.append(city)
         
-        while time < maxtime and count <= 7 and city in self.allconnections:
+        while time < maxtime and city in self.allconnections:
             best_stop_time = 100
             best_stop_city = ""
-            add = False
 
             for i in range(len(self.allconnections[city])):
-                aantal = 0
                 connection = random.choice(list(self.allconnections[city]))
                 time_traject = int(self.allconnections[city][connection])
 
@@ -120,6 +131,33 @@ class Routes():
 
         K = p * 10000 - (T * 100 + minutes)
         return K
+
+    def visualisation(self, traject):
+        colors = ["green", "red", "aqua", "orange", "yellow", "lawngreen", "deepskyblue", "violet", "pink", "deeppink", "darkviolet", "grey", "salmon", "gold", "mediumseagreen", "mediumturquoise", "darkkhaki", "lightgoldenrodyellow", "silver", "navy"]
+        img = plt.imread("../doc/kaart.png")
+        fix, ax = plt.subplots()
+        ax.imshow(img, extent=[3.1, 7.5, 50.6, 53.7])
+        counter = 0
+        legenda = []
+
+        for value in traject.items():
+            x_coor = []
+            y_coor = []
+            for stations in value[1][0]:
+                x_coor.append(self.stations[stations][0])
+                y_coor.append(self.stations[stations][1])
+
+            ax.plot(x_coor, y_coor, color=colors[counter], linestyle='dashed', marker='o', markersize=3)
+            counter += 1
+            legenda.append(counter) 
+
+        # for value in traject.items():
+        #     for stations in value[1][0]:
+        #         plt.annotate(stations, (self.stations[stations][0], self.stations[stations][1]), fontsize=6)
+
+        plt.title('Lijnvoering NL')
+        ax.legend(legenda, loc="best")
+        plt.show()
 
 if __name__ == "__main__":
     routes = Routes()
