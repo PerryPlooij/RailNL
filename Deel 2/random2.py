@@ -143,7 +143,7 @@ class Routes():
         perrys = []
         img = plt.imread("../doc/kaart.png")
         fix, ax = plt.subplots()
-        ax.imshow(img, extent=[3.1, 7.3, 50.1, 53.9])
+        ax.imshow(img, extent=[3.1, 7.5, 50.55, 53.72])
         print(traject)
         for value in traject.items():
             perry = "traject"
