@@ -11,17 +11,17 @@ class Routes():
         self.connections = {}
         self.verbinding = 0
 
-        with open('Bijlage/ConnectiesHolland.csv', 'rt') as csv_file:
+        with open('Bijlage/ConnectiesNationaal.csv', 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
             for row in reader: 
                 self.verbinding += 1
                 if row[0] not in self.connections:
                     self.connections[row[0]] = {}
-                self.connections[row[0]][row[1]] = row[2]
+                self.connections[row[0]][row[1]] = int(float(row[2]))
 
                 if row[1] not in self.connections:
                     self.connections[row[1]] = {}
-                self.connections[row[1]][row[0]] = row[2]
+                self.connections[row[1]][row[0]] = int(float(row[2]))
         
         with open('Bijlage/StationsNationaal.csv', 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
@@ -42,13 +42,13 @@ class Routes():
 
         while time.time() < t_end:
         #while randomcount < 10:
-            maxtime = 120
-            while maxtime <= 120:
+            maxtime = 0
+            while maxtime <= 180:
                 count = 1
                 self.trajects = {}
                 self.allconnections = copy.deepcopy(self.connections)
                 self.verbindingcopy = copy.deepcopy(self.verbinding)
-                while len(self.allconnections.keys()) != 0 and count <= 7:
+                while len(self.allconnections.keys()) != 0 and count <= 20:
                     city = random.choice(list(self.allconnections.keys()))
                     self.maketraject(city, count, maxtime)
                     count += 1
@@ -135,7 +135,7 @@ class Routes():
         
 
     def visualisation(self, traject):
-        colors = ["green", "red", "aqua", "orange", "yellow", "lawngreen", "deepskyblue", "violet", "pink", "deeppink", "darkviolet", "grey", "salmon", "gold", "mediumseagreen", "mediumturquoise", "darkkhaki", "lightgoldenrodyellow", "silver", "navy"]
+        colors = ["green", "red", "aqua", "orange", "yellow", "lawngreen", "deepskyblue", "violet", "pink", "deeppink", "darkviolet", "grey", "salmon", "gold", "mediumseagreen", "mediumturquoise", "darkkhaki", "chocolate", "silver", "navy"]
         img = plt.imread("../doc/kaart.png")
         fix, ax = plt.subplots()
         ax.imshow(img, extent=[3.1, 7.5, 50.6, 53.7])
