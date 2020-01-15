@@ -39,7 +39,6 @@ class Routes():
             for row in reader:
                 if row[0] not in self.stations:
                     self.stations[row[0]] = (float(row[2]),float(row[1]))
-            #print(self.stations)
 
 
     def randomsolution(self):
@@ -73,7 +72,7 @@ class Routes():
         print(bestquality)
         self.visualisation(besttraject)
 
-    def maketraject(self, city, maxtime):
+    def maketraject(self, city, count, maxtime):
         endtime = 0
         time = 0
         traject = []
@@ -150,10 +149,6 @@ class Routes():
             ax.plot(x_coor, y_coor, color=colors[counter], linestyle='dashed', marker='o', markersize=3)
             counter += 1
             legenda.append(counter) 
-
-        # for value in traject.items():
-        #     for stations in value[1][0]:
-        #         plt.annotate(stations, (self.stations[stations][0], self.stations[stations][1]), fontsize=6)
 
         plt.title('Lijnvoering NL')
         ax.legend(legenda, loc="best")
