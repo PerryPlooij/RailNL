@@ -1,12 +1,3 @@
-# *************************************************************************************************
-# * code.py (deel 1)
-# *
-# * PGT Party
-# *
-# * Random startoplossing.
-# *************************************************************************************************
-
-
 import copy
 import csv
 import random
@@ -14,26 +5,24 @@ import time
 
 import matplotlib.pyplot as plt
 
-#from coordinates import Stations
-
 
 class Routes():
     def __init__(self):
         self.connections = {}
         self.verbinding = 0
 
-        with open('Bijlage/ConnectiesNationaal.csv', 'rt') as csv_file:
+        with open('Bijlage/ConnectiesHolland.csv', 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
             for row in reader: 
                 self.verbinding += 1
                 if row[0] not in self.connections:
                     self.connections[row[0]] = {}
-                self.connections[row[0]][row[1]] = int(float(row[2]))
+                self.connections[row[0]][row[1]] = row[2]
 
                 if row[1] not in self.connections:
                     self.connections[row[1]] = {}
-                self.connections[row[1]][row[0]] = int(float(row[2]))
-
+                self.connections[row[1]][row[0]] = row[2]
+        
         with open('Bijlage/StationsNationaal.csv', 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
             self.stations = {}
@@ -44,22 +33,22 @@ class Routes():
             #print(self.stations)
 
 
-    def randomsolution(self):
+    def heuristiek(self):
         randomcount = 0
         bestquality = 0
         besttime = 0
         besttraject = None
-        t_end = time.time() + 60 * 0.1
+        t_end = time.time() + 60 * 10
 
         while time.time() < t_end:
-        # while randomcount < 100:
-            maxtime = 0
-            while maxtime <= 180:
+        #while randomcount < 10:
+            maxtime = 120
+            while maxtime <= 120:
                 count = 1
                 self.trajects = {}
                 self.allconnections = copy.deepcopy(self.connections)
                 self.verbindingcopy = copy.deepcopy(self.verbinding)
-                while len(self.allconnections.keys()) != 0 and count <= 20:
+                while len(self.allconnections.keys()) != 0 and count <= 7:
                     city = random.choice(list(self.allconnections.keys()))
                     self.maketraject(city, count, maxtime)
                     count += 1
@@ -69,16 +58,13 @@ class Routes():
                     besttraject = self.trajects
                     besttime = maxtime
                 maxtime += 1
-
             randomcount += 1
 
-        for value in besttraject.items():
-            if len(value[1][0]) < 4:
-                print(value[1][0])
-
-        # print(besttraject)
-        # print(bestquality)
+        print(besttraject)
+        print(bestquality)
         self.visualisation(besttraject)
+
+
 
     def maketraject(self, city, count, maxtime):
         endtime = 0
@@ -86,27 +72,27 @@ class Routes():
         traject = []
 
         traject.append(city)
-        
-        while time < maxtime and count <= 20 and city in self.allconnections:
+
+        while time < maxtime and city in self.allconnections:
+            #print(self.allconnections[city])
             best_stop_time = 100
             best_stop_city = ""
-            add = False
 
-            for i in range(len(self.allconnections[city])):
-                aantal = 0
-                connection = random.choice(list(self.allconnections[city]))
-                time_traject = int(self.allconnections[city][connection])
-
-                if time + time_traject <= maxtime:
-                    best_stop_time = time_traject
-                    best_stop_city = connection
-                    break
         
+            for i in range(len(self.allconnections[city])):
+                connection = list(self.allconnections[city].items())[i][0]
+                connectiontime = int(list(self.allconnections[city].items())[i][1])
+                if connectiontime < best_stop_time and connectiontime + time <= maxtime:
+                    best_stop_time = connectiontime
+                    best_stop_city = connection
+            
+
             if best_stop_city != '':
                 time += best_stop_time
                 endtime = time
-                del self.allconnections[city][connection]
-                del self.allconnections[connection][city]
+                del self.allconnections[city][best_stop_city]
+                del self.allconnections[best_stop_city][city]
+                #print("deleted: {}".format(self.allconnections[city]))
                 self.verbindingcopy = self.verbindingcopy - 1
 
                 if len(self.allconnections[city]) == 0:
@@ -127,19 +113,26 @@ class Routes():
                 endtime = int(connections[endcity])
                 traject.append(endcity)
 
+
         self.trajects[count] = (traject, endtime)
+        #print(self.verbindingcopy)
+        #print(len(self.trajects))
 
 
     def quality(self):
-        minutes = 0
-        p = 1 - self.verbindingcopy / self.verbinding
-        T = len(self.trajects)
+        self.minutes = 0
+        self.p = 1 - self.verbindingcopy / self.verbinding
+        self.T = len(self.trajects)
 
         for key, value in self.trajects.items():
-            minutes += value[1]
+            self.minutes += value[1]
 
-        K = p * 10000 - (T * 100 + minutes)
+        #print(self.trajects)
+        #print(self.p, self.T, self.minutes)
+        K = self.p * 10000 - (self.T * 100 + self.minutes)
         return K
+
+        
 
     def visualisation(self, traject):
         colors = ["green", "red", "aqua", "orange", "yellow", "lawngreen", "deepskyblue", "violet", "pink", "deeppink", "darkviolet", "grey", "salmon", "gold", "mediumseagreen", "mediumturquoise", "darkkhaki", "lightgoldenrodyellow", "silver", "navy"]
@@ -168,8 +161,6 @@ class Routes():
         ax.legend(legenda, loc="best")
         plt.show()
 
-
-    
 if __name__ == "__main__":
     routes = Routes()
-    routes.randomsolution()
+    routes.heuristiek()
