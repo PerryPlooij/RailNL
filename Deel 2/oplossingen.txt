@@ -18,3 +18,68 @@
 17: (['Rotterdam Centraal', 'Dordrecht', 'Rotterdam Blaak'], 31), 
 18: (['Den Haag Laan v NOI', 'Gouda', 'Rotterdam Alexander'], 38)}
 kwaliteit: 6649
+
+# Deel 2.1
+1: 'Den Helder', 'Alkmaar', 'Castricum', 'Zaandam', 'Amsterdam Sloterdijk', 'Amsterdam Centraal', 'Amsterdam Amstel', 'Amsterdam Zuid', 'Schiphol Airport', 'Leiden Centraal', 'Den Haag Laan v NOI', 'Delft', 'Schiedam Centrum', 'Rotterdam Centraal', 'Rotterdam Alexander', 'Rotterdam Blaak', 'Dordrecht'
+    Tijdsduur: 172 
+2: 'Lelystad Centrum', 'Almere Centrum', 'Hilversum', 'Utrecht Centraal', 'Amersfoort', 'Apeldoorn', 'Deventer', 'Zutphen', 'Dieren', 'Arnhem Centraal', 'Ede-Wageningen'
+    Tijdsduur: 145 
+3: 'Venlo', 'Helmond', 'Eindhoven', 'Weert', 'Roermond', 'Sittard', 'Maastricht'
+    Tijdsduur: 100 
+4: 'Enschede', 'Hengelo', 'Almelo', 'Zwolle', 'Steenwijk', 'Heerenveen', 'Leeuwarden', 'Groningen', 'Assen'
+    Tijdsduur: 165 
+5: 'Vlissingen', 'Roosendaal', 'Etten-Leur', 'Breda', 'Tilburg', 's-Hertogenbosch', 'Oss', 'Nijmegen'
+    Tijdsduur: 136 
+6: 'Heerlen', 'Sittard'
+    Tijdsduur: 15 
+7: 'Hoorn', 'Alkmaar'
+    Tijdsduur: 24 
+8: 'Beverwijk', 'Haarlem', 'Heemstede-Aerdenhout'
+    Tijdsduur: 22 
+9: 'Gouda', 'Den Haag Centraal'
+    Tijdsduur: 18 
+10: 'Den Haag HS', 'Delft'
+    Tijdsduur: 8 
+11: 'Alphen a/d Rijn', 'Leiden Centraal'
+    Tijdsduur: 14
+
+Kwaliteit: 8081
+
+# Deel 2.1 Alles random
+Maxtime: 146
+1: 'Maastricht', 'Sittard', 'Heerlen' 
+    Tijdsduur: 30
+2: 'Schiphol Airport', 'Leiden Centraal', 'Den Haag Laan v NOI', 'Delft', 'Den Haag Centraal', 'Gouda', 'Den Haag HS' 
+    Tijdsduur: 88 
+3: 'Amersfoort', 'Utrecht Centraal', 'Alphen a/d Rijn' 
+    Tijdsduur: 42 
+4: 'Amsterdam Centraal', 'Amsterdam Sloterdijk', 'Amsterdam Zuid', 'Amsterdam Amstel', 'Hilversum', 'Almere Centrum', 'Lelystad Centrum' 
+    Tijdsduur: 100
+5: 'Assen', 'Groningen', 'Leeuwarden', 'Heerenveen', 'Steenwijk', 'Zwolle' 
+    Tijdsduur: 106
+6: 'Vlissingen', 'Roosendaal', 'Etten-Leur', 'Breda', 'Dordrecht', 'Rotterdam Centraal', 'Schiedam Centrum', 'Rotterdam Blaak', 'Rotterdam Alexander' 
+    Tijdsduur: 141 
+7: 'Ede-Wageningen', 'Arnhem Centraal', 'Nijmegen', 'Oss', 's-Hertogenbosch', 'Tilburg', 'Eindhoven', 'Helmond', 'Venlo' 
+    Tijdsduur: 124
+8: 'Roermond', 'Weert' 
+    Tijdsduur: 14 
+9: 'Dieren', 'Zutphen', 'Apeldoorn', 'Deventer', 'Almelo', 'Hengelo', 'Enschede' 
+    Tijdsduur: 79 
+10: 'Den Helder', 'Alkmaar', 'Hoorn', 'Zaandam', 'Castricum', 'Beverwijk', 'Haarlem', 'Heemstede-Aerdenhout' 
+    Tijdsduur: 133
+
+Kwaliteit: 8143.0
+
+{1: (['Alphen a/d Rijn', 'Gouda', 'Den Haag Laan v NOI', 'Leiden Centraal', 'Den Haag Centraal', 'Delft', 'Den Haag HS', 'Gouda', 'Den Haag Centraal', 'Delft', 'Schiedam Centrum', 'Rotterdam Centraal'], 153), 
+2: (['Almelo', 'Deventer', 'Zutphen', 'Apeldoorn', 'Deventer', 'Zwolle', 'Assen', 'Groningen'], 147), 
+3: (['Den Haag Laan v NOI', 'Delft', 'Schiedam Centrum', 'Rotterdam Blaak', 'Dordrecht', 'Breda', 'Etten-Leur', 'Roosendaal', 'Vlissingen'], 143), 
+4: (['Utrecht Centraal', 'Hilversum', 'Almere Centrum', 'Amsterdam Centraal', 'Amsterdam Sloterdijk', 'Amsterdam Zuid', 'Amsterdam Amstel', 'Amsterdam Centraal', 'Utrecht Centraal', 'Gouda', 'Rotterdam Alexander'], 156), 
+5: (['Enschede', 'Hengelo', 'Almelo', 'Zwolle', 'Steenwijk', 'Heerenveen', 'Leeuwarden', 'Groningen'], 148), 
+6: (['Beverwijk', 'Castricum', 'Alkmaar', 'Den Helder', 'Alkmaar', 'Hoorn', 'Zaandam', 'Castricum'], 156), 
+7: (['Lelystad Centrum', 'Almere Centrum', 'Amsterdam Amstel', 'Utrecht Centraal', 'Schiphol Airport', 'Amsterdam Zuid', 'Amsterdam Amstel', 'Hilversum'], 137), 
+8: (['Heerlen', 'Sittard', 'Maastricht', 'Sittard', 'Roermond', 'Weert', 'Eindhoven', 'Tilburg', 'Breda', 'Dordrecht'], 143), 
+9: (['Beverwijk', 'Zaandam', 'Amsterdam Sloterdijk', 'Haarlem', 'Beverwijk', 'Haarlem', 'Heemstede-Aerdenhout', 'Leiden Centraal', 'Alphen a/d Rijn', 'Utrecht Centraal', 'Amersfoort'], 149), 
+10: (['Rotterdam Alexander', 'Rotterdam Centraal', 'Dordrecht', 'Roosendaal', 'Dordrecht', 'Rotterdam Blaak', 'Rotterdam Alexander', 'Gouda', 'Den Haag HS', 'Leiden Centraal', 'Schiphol Airport', 'Amsterdam Zuid'], 156), 
+11: (['Zwolle', 'Amersfoort', 'Apeldoorn', 'Zutphen', 'Dieren', 'Arnhem Centraal', 'Nijmegen', 'Oss', 's-Hertogenbosch', 'Tilburg'], 153), 
+12: (['Venlo', 'Helmond', 'Eindhoven', 's-Hertogenbosch', 'Utrecht Centraal', 'Ede-Wageningen', 'Arnhem Centraal', 'Ede-Wageningen', 'Utrecht Centraal'], 152)}
+7007.0
