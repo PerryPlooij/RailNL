@@ -41,7 +41,6 @@ class Routes():
             for row in reader:
                 if row[0] not in self.stations:
                     self.stations[row[0]] = (float(row[2]),float(row[1]))
-            #print(self.stations)
 
 
     def randomsolution(self):
@@ -49,11 +48,11 @@ class Routes():
         bestquality = 0
         besttime = 0
         besttraject = None
-        t_end = time.time() + 60 * 10
+        t_end = time.time() + 60 * 30
 
-        while time.time() < t_end:
-        # while randomcount < 100:
-            maxtime = 100
+        # while time.time() < t_end:
+        while randomcount < 500:
+            maxtime = 170
             while maxtime <= 180:
                 count = 1
                 self.trajects = {}
@@ -64,6 +63,9 @@ class Routes():
                     city = random.choice(list(self.allconnections2.keys()))
                     self.maketraject(city, count, maxtime)
                     count += 1
+                
+                best = self.quality()
+                self.improve(best)
 
                 if self.quality() > bestquality:
                     bestquality = self.quality()
@@ -73,13 +75,8 @@ class Routes():
 
             randomcount += 1
 
-        for value in besttraject.items():
-            if len(value[1][0]) < 4:
-                print(value[1][0])
-
         print(besttraject)
         print(bestquality)
-        print(self.verbindingcopy)
         self.visualisation(besttraject)
 
     def maketraject(self, city, count, maxtime):
@@ -145,6 +142,59 @@ class Routes():
 
         self.trajects[count] = (traject, endtime)
 
+
+    def improve(self, best):
+        run = True
+        while run:
+            for key1, value1 in self.trajects.items():
+                if len(value1[0]) >= 2:
+                    beginbegin = value1[0][0]
+                    begineind = value1[0][1]
+                    for key2, value2 in self.trajects.items():
+                        for i in range(1, len(value2[0]) - 1):
+                            if value2[0][i] == beginbegin and value2[0][i + 1] == begineind:
+                                time = self.trajects[key1][1]
+                                newtime = time - self.connections[beginbegin][begineind]
+                                del self.trajects[key1][0][0]
+                                listtraject = list(self.trajects[key1])
+                                listtraject[len(listtraject) - 1] = newtime
+                                self.trajects[key1] = tuple(listtraject)
+                                break
+                            elif value2[0][i] == begineind and value2[0][i + 1] == beginbegin:
+                                time = self.trajects[key1][1]
+                                newtime = time - self.connections[begineind][beginbegin]
+                                del self.trajects[key1][0][0]
+                                listtraject = list(self.trajects[key1])
+                                listtraject[len(listtraject) - 1] = newtime
+                                self.trajects[key1] = tuple(listtraject)
+                                break
+
+                if len(value1[0]) >= 2:
+                    eindbegin = value1[0][-2]
+                    eindeind = value1[0][-1]
+                    for key2, value2 in self.trajects.items():
+                        for i in range(len(value2[0]) - 2):
+                            if value2[0][i] == eindbegin and value2[0][i + 1] == eindeind:
+                                newtime = self.trajects[key1][1] - self.connections[eindbegin][eindeind]
+                                del self.trajects[key1][0][-1]
+                                listtraject = list(self.trajects[key1])
+                                listtraject[len(listtraject) - 1] = newtime
+                                self.trajects[key1] = tuple(listtraject)
+                                break
+                            elif value2[0][i] == eindeind and value2[0][i + 1] == eindbegin:
+                                time = self.trajects[key1][1]
+                                newtime = time - self.connections[eindeind][eindbegin]
+                                del self.trajects[key1][0][-1]
+                                listtraject = list(self.trajects[key1])
+                                listtraject[len(listtraject) - 1] = newtime
+                                self.trajects[key1] = tuple(listtraject)
+                                break
+                                    
+            new = self.quality()
+            if new == best:
+                run = False
+            else:
+                best = new
 
     def quality(self):
         minutes = 0

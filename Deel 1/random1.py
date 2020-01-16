@@ -48,8 +48,8 @@ class Routes():
         besttraject = None
         t_end = time.time() + 60 * 0.5
 
-        while time.time() < t_end:
-        # while randomcount < 1:
+        # while time.time() < t_end:
+        while randomcount < 1000:
             maxtime = 0
             while maxtime <= 120:
                 count = 1
