@@ -49,7 +49,7 @@ class Routes():
         bestquality = 0
         besttime = 0
         besttraject = None
-        t_end = time.time() + 60 * 0.1
+        t_end = time.time() + 60 * 1
 
         while time.time() < t_end:
         # while randomcount < 100:
@@ -76,8 +76,8 @@ class Routes():
             if len(value[1][0]) < 4:
                 print(value[1][0])
 
-        # print(besttraject)
-        # print(bestquality)
+        print(besttraject)
+        print(bestquality)
         self.visualisation(besttraject)
 
     def maketraject(self, city, count, maxtime):
