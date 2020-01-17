@@ -17,7 +17,7 @@
 16: (['Heerlen', 'Sittard', 'Maastricht'], 30), 
 17: (['Rotterdam Centraal', 'Dordrecht', 'Rotterdam Blaak'], 31), 
 18: (['Den Haag Laan v NOI', 'Gouda', 'Rotterdam Alexander'], 38)}
-kwaliteit: 6649
+Kwaliteit: 6649
 
 tom2.py
 1: (['Alphen a/d Rijn', 'Gouda', 'Den Haag Laan v NOI', 'Leiden Centraal', 'Den Haag Centraal', 'Delft', 'Den Haag HS', 'Gouda', 'Den Haag Centraal', 'Delft', 'Schiedam Centrum', 'Rotterdam Centraal'], 153), 
@@ -32,4 +32,19 @@ tom2.py
 10: (['Rotterdam Alexander', 'Rotterdam Centraal', 'Dordrecht', 'Roosendaal', 'Dordrecht', 'Rotterdam Blaak', 'Rotterdam Alexander', 'Gouda', 'Den Haag HS', 'Leiden Centraal', 'Schiphol Airport', 'Amsterdam Zuid'], 156), 
 11: (['Zwolle', 'Amersfoort', 'Apeldoorn', 'Zutphen', 'Dieren', 'Arnhem Centraal', 'Nijmegen', 'Oss', 's-Hertogenbosch', 'Tilburg'], 153), 
 12: (['Venlo', 'Helmond', 'Eindhoven', 's-Hertogenbosch', 'Utrecht Centraal', 'Ede-Wageningen', 'Arnhem Centraal', 'Ede-Wageningen', 'Utrecht Centraal'], 152)
-7007.0
+Kwaliteit: 7007.0
+
+tom2.py improved
+{1: (['Groningen', 'Assen', 'Zwolle', 'Steenwijk', 'Heerenveen', 'Leeuwarden', 'Groningen'], 146), 
+2: (['Haarlem', 'Amsterdam Sloterdijk', 'Amsterdam Centraal', 'Amsterdam Amstel', 'Hilversum', 'Almere Centrum', 'Amsterdam Amstel', 'Amsterdam Zuid', 'Schiphol Airport', 'Leiden Centraal', 'Den Haag Laan v NOI', 'Delft', 'Schiedam Centrum'], 165), 
+3: (['s-Hertogenbosch', 'Utrecht Centraal', 'Schiphol Airport', 'Amsterdam Zuid', 'Amsterdam Sloterdijk', 'Zaandam', 'Castricum', 'Alkmaar'], 109), 
+4: (['Vlissingen', 'Roosendaal', 'Dordrecht', 'Rotterdam Centraal', 'Rotterdam Alexander', 'Rotterdam Blaak', 'Dordrecht', 'Breda'], 151), 
+5: (['Rotterdam Blaak', 'Schiedam Centrum', 'Rotterdam Centraal', 'Rotterdam Alexander', 'Gouda', 'Alphen a/d Rijn', 'Utrecht Centraal', 'Amsterdam Centraal', 'Almere Centrum', 'Lelystad Centrum'], 142), 
+6: (['Zwolle', 'Amersfoort', 'Apeldoorn', 'Zutphen', 'Dieren', 'Arnhem Centraal', 'Ede-Wageningen', 'Utrecht Centraal', 'Gouda', 'Den Haag Centraal'], 169), 
+7: (['Maastricht', 'Sittard', 'Heerlen', 'Sittard', 'Roermond', 'Weert', 'Eindhoven', 'Helmond', 'Venlo'], 130), 
+8: (['Alphen a/d Rijn', 'Leiden Centraal', 'Den Haag Centraal', 'Delft', 'Den Haag HS', 'Gouda', 'Den Haag Laan v NOI', 'Delft', 'Den Haag HS', 'Leiden Centraal', 'Heemstede-Aerdenhout', 'Haarlem', 'Beverwijk'], 163), 
+9: (['Roosendaal', 'Etten-Leur', 'Breda', 'Tilburg', 'Eindhoven', 's-Hertogenbosch', 'Tilburg', 's-Hertogenbosch', 'Oss', 'Nijmegen', 'Arnhem Centraal'], 139), 
+10: (['Amersfoort', 'Utrecht Centraal', 'Hilversum', 'Utrecht Centraal', 'Amsterdam Amstel'], 63), 
+11: (['Castricum', 'Beverwijk', 'Zaandam', 'Hoorn', 'Alkmaar', 'Den Helder'], 124), 
+12: (['Almelo', 'Deventer', 'Apeldoorn', 'Zutphen', 'Deventer', 'Zwolle', 'Almelo', 'Hengelo', 'Enschede'], 149)}
+Kwaliteit: 7150.0

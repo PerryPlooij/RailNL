@@ -22,7 +22,7 @@ class Routes():
         self.connections = {}
         self.verbinding = 0
 
-        with open('Bijlage/ConnectiesNationaal.csv', 'rt') as csv_file:
+        with open('Bijlage/ConnectiesHolland.csv', 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
             for row in reader: 
                 self.verbinding += 1
@@ -50,16 +50,16 @@ class Routes():
         besttraject = None
         t_end = time.time() + 60 * 20
 
-        while time.time() < t_end:
-        # while randomcount < 500:
-            maxtime = 160
-            while maxtime <= 180:
+        # while time.time() < t_end:
+        while randomcount < 1000:
+            maxtime = 80
+            while maxtime <= 120:
                 count = 1
                 self.trajects = {}
                 self.allconnections = copy.deepcopy(self.connections)
                 self.allconnections2 = copy.deepcopy(self.connections)
                 self.verbindingcopy = copy.deepcopy(self.verbinding)
-                while len(self.allconnections2.keys()) != 0 and count <= 20:
+                while len(self.allconnections2.keys()) != 0 and count <= 7:
                     city = random.choice(list(self.allconnections2.keys()))
                     self.maketraject(city, count, maxtime)
                     count += 1
@@ -86,7 +86,7 @@ class Routes():
 
         traject.append(city)
         
-        while time < maxtime and count <= 20 and city in self.allconnections:
+        while time < maxtime and count <= 7 and city in self.allconnections:
             best_stop_time = 100
             best_stop_city = ""
             add = False

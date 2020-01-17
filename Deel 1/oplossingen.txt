@@ -1,4 +1,4 @@
-random 1000x:
+random1 1000x:
 1: (['Den Helder', 'Alkmaar', 'Castricum', 'Zaandam', 'Hoorn', 'Alkmaar'], 107), 
 2: (['Rotterdam Centraal', 'Schiedam Centrum', 'Delft', 'Den Haag Centraal', 'Gouda', 'Rotterdam Alexander', 'Rotterdam Centraal', 'Dordrecht'], 78), 
 3: (['Gouda', 'Alphen a/d Rijn', 'Leiden Centraal', 'Schiphol Airport', 'Amsterdam Zuid', 'Amsterdam Sloterdijk', 'Zaandam', 'Beverwijk', 'Castricum'], 114), 
@@ -13,3 +13,17 @@ heuristiek1 1000x:
 4: (['Castricum', 'Zaandam', 'Beverwijk', 'Haarlem'], 53), 
 5: (['Den Helder', 'Alkmaar'], 36)
 Kwaliteit: 9119.0
+
+tom1.py 1000x:
+1: (['Rotterdam Centraal', 'Schiedam Centrum', 'Delft', 'Den Haag Centraal', 'Gouda', 'Alphen a/d Rijn', 'Leiden Centraal', 'Heemstede-Aerdenhout', 'Haarlem', 'Beverwijk'], 111), 
+2: (['Castricum', 'Zaandam', 'Beverwijk', 'Castricum', 'Alkmaar', 'Den Helder'], 95), 
+3: (['Rotterdam Centraal', 'Dordrecht', 'Rotterdam Centraal', 'Rotterdam Alexander', 'Gouda', 'Den Haag Centraal', 'Leiden Centraal', 'Schiphol Airport', 'Amsterdam Zuid'], 103), 
+4: (['Haarlem', 'Amsterdam Sloterdijk', 'Amsterdam Zuid', 'Amsterdam Amstel', 'Amsterdam Centraal', 'Amsterdam Sloterdijk', 'Zaandam', 'Hoorn', 'Alkmaar'], 107)
+Kwaliteit: 9184.0
+
+tom1_improve.py 1000x:
+1: (['Gouda', 'Rotterdam Alexander', 'Rotterdam Centraal', 'Dordrecht', 'Rotterdam Centraal', 'Schiedam Centrum', 'Delft', 'Den Haag Centraal'], 77), 
+2: (['Alkmaar', 'Castricum', 'Zaandam', 'Hoorn', 'Alkmaar', 'Den Helder'], 107), 
+3: (['Castricum', 'Beverwijk', 'Zaandam', 'Amsterdam Sloterdijk', 'Amsterdam Centraal', 'Amsterdam Amstel', 'Amsterdam Zuid', 'Amsterdam Sloterdijk', 'Haarlem', 'Beverwijk'], 111), 
+4: (['Haarlem', 'Heemstede-Aerdenhout', 'Leiden Centraal', 'Alphen a/d Rijn', 'Gouda', 'Den Haag Centraal', 'Leiden Centraal', 'Schiphol Airport', 'Amsterdam Zuid'], 103)
+9202.0

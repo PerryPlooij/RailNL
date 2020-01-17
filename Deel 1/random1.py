@@ -1,5 +1,5 @@
 # *************************************************************************************************
-# * code.py (deel 1)
+# * random1.py (deel 1)
 # *
 # * PGT Party
 # *
@@ -18,12 +18,13 @@ import matplotlib.pyplot as plt
 class Routes():
     def __init__(self):
         self.connections = {}
-        self.verbinding = 0
+        self.connection = 0
 
+        # Import all connections of the stations
         with open('Bijlage/ConnectiesHolland.csv', 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
             for row in reader: 
-                self.verbinding += 1
+                self.connection += 1
                 if row[0] not in self.connections:
                     self.connections[row[0]] = {}
                 self.connections[row[0]][row[1]] = row[2]
@@ -32,6 +33,7 @@ class Routes():
                     self.connections[row[1]] = {}
                 self.connections[row[1]][row[0]] = row[2]
         
+        # Import all stations 
         with open('Bijlage/StationsNationaal.csv', 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
             self.stations = {}
@@ -42,6 +44,8 @@ class Routes():
 
 
     def randomsolution(self):
+        """ Create random solution and check if a new solution is better than the previous solution  """
+
         randomcount = 0
         bestquality = 0
         besttime = 0
@@ -54,13 +58,21 @@ class Routes():
             while maxtime <= 120:
                 count = 1
                 self.trajects = {}
+
+                # Deepcopy allconnections to make sure all connections are available by making new trajects
                 self.allconnections = copy.deepcopy(self.connections)
-                self.verbindingcopy = copy.deepcopy(self.verbinding)
+
+                # Deepcopy the total amount of connections (connectioncopy) to reduce the amount (connection)
+                # when making a new connection
+                self.connectioncopy = copy.deepcopy(self.connection)
+
+                # Make a maximum of 7 traject or when all connections are used with a random station as startstation
                 while len(self.allconnections.keys()) != 0 and count <= 7:
                     city = random.choice(list(self.allconnections.keys()))
                     self.maketraject(city, count, maxtime)
                     count += 1
 
+                # Check if the new quality is higher than the previous quality
                 if self.quality() > bestquality:
                     bestquality = self.quality()
                     besttraject = self.trajects
@@ -73,31 +85,36 @@ class Routes():
         self.visualisation(besttraject)
 
     def maketraject(self, city, count, maxtime):
+        """ Making a new traject with a given maxtime """
         endtime = 0
         time = 0
         traject = []
 
         traject.append(city)
         
+        # Check if a new city can be added to the traject
         while time < maxtime and city in self.allconnections:
             best_stop_time = 100
             best_stop_city = ""
 
+            # Search for a new station in the cityconnections
             for i in range(len(self.allconnections[city])):
                 connection = random.choice(list(self.allconnections[city]))
                 time_traject = int(self.allconnections[city][connection])
 
+                # Add new station to the traject if the new time is less or equal to the maxtime
                 if time + time_traject <= maxtime:
                     best_stop_time = time_traject
                     best_stop_city = connection
                     break
         
+            # If new city is found set time to new time and delete connection of allconnections
             if best_stop_city != '':
                 time += best_stop_time
                 endtime = time
                 del self.allconnections[city][connection]
                 del self.allconnections[connection][city]
-                self.verbindingcopy = self.verbindingcopy - 1
+                self.connectioncopy = self.connectioncopy - 1
 
                 if len(self.allconnections[city]) == 0:
                     del self.allconnections[city]
@@ -111,18 +128,21 @@ class Routes():
                 endtime = time
                 time = maxtime
             
-            if len(traject) == 1:
-                connections = self.connections[traject[0]]
-                endcity = min(connections, key=lambda k: connections[k])
-                endtime = int(connections[endcity])
-                traject.append(endcity)
+                # Make traject with a length of at least two stations
+                if len(traject) == 1:
+                    connections = self.connections[traject[0]]
+                    endcity = min(connections, key=lambda k: connections[k])
+                    endtime = int(connections[endcity])
+                    traject.append(endcity)
 
         self.trajects[count] = (traject, endtime)
 
 
     def quality(self):
+        """ Calculate quality of the created timetable """
+
         minutes = 0
-        p = 1 - self.verbindingcopy / self.verbinding
+        p = 1 - self.connectioncopy / self.connection
         T = len(self.trajects)
 
         for key, value in self.trajects.items():
@@ -132,13 +152,16 @@ class Routes():
         return K
 
     def visualisation(self, traject):
-        colors = ["green", "red", "aqua", "orange", "yellow", "lawngreen", "deepskyblue", "violet", "pink", "deeppink", "darkviolet", "grey", "salmon", "gold", "mediumseagreen", "mediumturquoise", "darkkhaki", "lightgoldenrodyellow", "silver", "navy"]
+        """ Make a visualisation of the best timetable"""
+
+        colors = ["green", "red", "aqua", "orange", "yellow", "lawngreen", "deepskyblue"]
         img = plt.imread("../doc/kaart.png")
         fix, ax = plt.subplots()
         ax.imshow(img, extent=[3.1, 7.5, 50.6, 53.7])
         counter = 0
-        legenda = []
+        legendnumber = []
 
+        # Retrieve coordinates of stations in the trajects
         for value in traject.items():
             x_coor = []
             y_coor = []
@@ -148,10 +171,10 @@ class Routes():
 
             ax.plot(x_coor, y_coor, color=colors[counter], linestyle='dashed', marker='o', markersize=3)
             counter += 1
-            legenda.append(counter) 
+            legendnumber.append(counter) 
 
         plt.title('Lijnvoering NL')
-        ax.legend(legenda, loc="best")
+        ax.legend(legendnumber, loc="best")
         plt.show()
 
 if __name__ == "__main__":
