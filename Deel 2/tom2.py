@@ -49,10 +49,10 @@ class Routes():
         bestquality = 0
         besttime = 0
         besttraject = None
-        t_end = time.time() + 60 * 10
+        t_end = time.time() + 60 * 5
 
-        while time.time() < t_end:
-        # while randomcount < 100:
+        # while time.time() < t_end:
+        while randomcount < 1000:
             maxtime = 100
             while maxtime <= 180:
                 count = 1
@@ -67,15 +67,12 @@ class Routes():
 
                 if self.quality() > bestquality:
                     bestquality = self.quality()
+                    print(bestquality)
                     besttraject = self.trajects
                     besttime = maxtime
                 maxtime += 1
 
             randomcount += 1
-
-        for value in besttraject.items():
-            if len(value[1][0]) < 4:
-                print(value[1][0])
 
         print(besttraject)
         print(bestquality)

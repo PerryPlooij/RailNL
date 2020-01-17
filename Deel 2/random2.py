@@ -72,10 +72,6 @@ class Routes():
 
             randomcount += 1
 
-        for value in besttraject.items():
-            if len(value[1][0]) < 4:
-                print(value[1][0])
-
         print(besttraject)
         print(bestquality)
         self.visualisation(besttraject)
