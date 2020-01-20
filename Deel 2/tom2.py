@@ -48,7 +48,7 @@ class Routes():
         bestquality = 0
         besttime = 0
         besttraject = None
-        t_end = time.time() + 60 * 20
+        t_end = time.time() + 60 * 2
 
         while time.time() < t_end:
         # while randomcount < 500:
