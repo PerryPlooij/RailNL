@@ -1,10 +1,10 @@
-# *************************************************************************************************
-# * random1.py (deel 1)
+# *******************************************************************************************
+# * random_once1.py
 # *
 # * PGT Party
 # *
-# * Random startoplossing.
-# *************************************************************************************************
+# * Timetable with every connection once and the startstation and connection randomly chosen.
+# *******************************************************************************************
 
 
 import copy
@@ -21,8 +21,9 @@ class Routes():
         self.connection = 0
 
         # Import all connections of the stations
-        with open('Bijlage/ConnectiesHolland.csv', 'rt') as csv_file:
+        with open('../Bijlage/ConnectiesHolland.csv', 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
+
             for row in reader: 
                 self.connection += 1
                 if row[0] not in self.connections:
@@ -34,7 +35,7 @@ class Routes():
                 self.connections[row[1]][row[0]] = row[2]
         
         # Import all stations 
-        with open('Bijlage/StationsNationaal.csv', 'rt') as csv_file:
+        with open('../Bijlage/StationsNationaal.csv', 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
             self.stations = {}
 
@@ -46,16 +47,20 @@ class Routes():
     def randomsolution(self):
         """ Create random solution and check if a new solution is better than the previous solution  """
 
+        qualities = []
+        amount = 0
         randomcount = 0
         bestquality = 0
         besttime = 0
         besttraject = None
-        t_end = time.time() + 60 * 0.5
+        t_end = time.time() + 60 * 30
 
         # while time.time() < t_end:
-        while randomcount < 1000:
-            maxtime = 0
-            while maxtime <= 120:
+        # while randomcount < 500:
+        while bestquality != 9119.0:
+            maxtime = 100
+            while maxtime <= 120 and bestquality != 9119.0:
+                amount += 1
                 count = 1
                 self.trajects = {}
 
@@ -73,23 +78,30 @@ class Routes():
                     count += 1
 
                 # Check if the new quality is higher than the previous quality
-                if self.quality() > bestquality:
-                    bestquality = self.quality()
+                quality = self.quality()
+                qualities.append(quality)
+                if quality > bestquality:
+                    bestquality = quality
                     besttraject = self.trajects
                     besttime = maxtime
+
                 maxtime += 1
+
             randomcount += 1
 
+        # print(qualities)
+        # self.qualityvisualisation(qualities)
+        print(amount)
         print(besttraject)
         print(bestquality)
         self.visualisation(besttraject)
 
     def maketraject(self, city, count, maxtime):
         """ Making a new traject with a given maxtime """
+        
         endtime = 0
         time = 0
         traject = []
-
         traject.append(city)
         
         # Check if a new city can be added to the traject
@@ -151,11 +163,20 @@ class Routes():
         K = p * 10000 - (T * 100 + minutes)
         return K
 
+    
+    def qualityvisualisation(self, qualities):
+        """ Show qualities of all created timetables """
+
+        fig, ax = plt.subplots()
+        ax.plot(qualities)
+        plt.show()
+
+
     def visualisation(self, traject):
-        """ Make a visualisation of the best timetable"""
+        """ Make a visualisation of the best timetable """
 
         colors = ["green", "red", "aqua", "orange", "yellow", "lawngreen", "deepskyblue"]
-        img = plt.imread("../doc/kaart.png")
+        img = plt.imread("../../doc/kaart.png")
         fix, ax = plt.subplots()
         ax.imshow(img, extent=[3.1, 7.5, 50.6, 53.7])
         counter = 0
@@ -165,6 +186,7 @@ class Routes():
         for value in traject.items():
             x_coor = []
             y_coor = []
+            
             for stations in value[1][0]:
                 x_coor.append(self.stations[stations][0])
                 y_coor.append(self.stations[stations][1])
@@ -173,9 +195,10 @@ class Routes():
             counter += 1
             legendnumber.append(counter) 
 
-        plt.title('Lijnvoering NL')
+        plt.title('Lijnvoering Noord- en Zuid-Holland')
         ax.legend(legendnumber, loc="best")
         plt.show()
+
 
 if __name__ == "__main__":
     routes = Routes()
