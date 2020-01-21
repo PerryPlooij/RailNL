@@ -19,6 +19,7 @@ class Routes():
     def __init__(self):
         self.connections = {}
         self.connection = 0
+        self.startstation = []
 
         # Import all connections of the stations
         with open('../Bijlage/ConnectiesHolland.csv', 'rt') as csv_file:
@@ -43,6 +44,10 @@ class Routes():
                 if row[0] not in self.stations:
                     self.stations[row[0]] = (float(row[2]),float(row[1]))
 
+        for key, value in self.connections.items():
+            if len(value) == 1:
+                self.startstation.append(key)
+
 
     def randomsolution(self):
         """ Create random solution and check if a new solution is better than the previous solution  """
@@ -52,17 +57,19 @@ class Routes():
         bestquality = 0
         besttime = 0
         besttraject = None
-        t_end = time.time() + 60 * 30
+        t_end = time.time() + 60 * 5
+        t_start = time.time()
 
-        # while time.time() < t_end:
+        while time.time() < t_end:
         # while randomcount < 1000:
-        while bestquality != 9201:
+        # while bestquality != 9219:
             maxtime = 80
-            while maxtime <= 120 and bestquality != 9201:
+            while maxtime <= 120 and bestquality != 9219:
                 amount += 1
                 count = 1
                 self.trajects = {}
 
+                self.start = copy.deepcopy(self.startstation)
                 # Deepcopy allconnections twice to make sure all connections are available twice by making new trajects
                 self.allconnections = copy.deepcopy(self.connections)
                 self.allconnections2 = copy.deepcopy(self.connections)
@@ -73,9 +80,15 @@ class Routes():
                 
                 # Make a maximum of 7 traject or when all connections are used with a random station as startstation
                 while len(self.allconnections2.keys()) != 0 and count <= 7:
-                    city = random.choice(list(self.allconnections2.keys()))
-                    self.maketraject(city, count, maxtime)
-                    count += 1
+                    if self.start: 
+                        city = random.choice(self.start)
+                        self.maketraject(city, count, maxtime)
+                        self.start.remove(city)
+                        count += 1
+                    else:
+                        city = random.choice(list(self.allconnections2.keys()))
+                        self.maketraject(city, count, maxtime)
+                        count += 1
                 
                 # Check if the new quality is higher than the previous quality
                 quality = self.quality()
@@ -83,12 +96,16 @@ class Routes():
                     bestquality = quality
                     besttraject = self.trajects
                     besttime = maxtime
+                    tijd = time.time() - t_start
+                    print("tijd {}".format(tijd))
+                    print("herhalingen {}".format(amount))
+                    print("besttraject {}".format(besttraject))
+                    print("bestquality {}".format(bestquality))
 
                 maxtime += 1
 
             randomcount += 1
 
-        print(amount)
         print(besttraject)
         print(bestquality)
         self.visualisation(besttraject)
