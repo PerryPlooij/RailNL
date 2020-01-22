@@ -53,23 +53,12 @@ class Routes():
         bestquality = 0
         besttime = 0
         besttraject = None
-<<<<<<< HEAD:Deel 2/tom2.py
         t_end = time.time() + 60 * 2
 
         while time.time() < t_end:
         # while randomcount < 500:
             maxtime = 160
             while maxtime <= 180:
-=======
-        t_end = time.time() + 60 * 30
-        t_start = time.time()
-        
-        # while time.time() < t_end:
-        # while randomcount < 10:
-        while bestquality < 9214:
-            maxtime = 80
-            while maxtime <= 120 and bestquality < 9214:
->>>>>>> d88a0dceb60bf3fa6b84cd09759ce9612c623e6a:Deel 1/Code/random_twice_improved1.py
                 count = 1
                 amount += 1
                 self.trajects = {}
@@ -92,14 +81,8 @@ class Routes():
                 best = self.quality()
                 best = self.improve(best)
 
-<<<<<<< HEAD:Deel 2/tom2.py
-                if self.quality() > bestquality:
-                    bestquality = self.quality()
-                    print(bestquality)
-=======
                 if best > bestquality:
                     bestquality = best
->>>>>>> d88a0dceb60bf3fa6b84cd09759ce9612c623e6a:Deel 1/Code/random_twice_improved1.py
                     besttraject = self.trajects
                     besttime = maxtime
                     tijd = time.time() - t_start
