@@ -20,7 +20,9 @@ class Routes():
     def __init__(self):
         self.connections = {}
         self.connection = 0
-
+        self.startstation = []
+        self.bigstation = []
+        
         # Import all connections of the stations
         with open('../Bijlage/ConnectiesHolland.csv', 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
@@ -35,6 +37,14 @@ class Routes():
                     self.connections[row[1]] = {}
                 self.connections[row[1]][row[0]] = row[2]
         
+        # Check if a station is a startstation
+        for key, value in self.connections.items():
+            if len(value) == 1:
+                self.startstation.append(key)
+            elif key == "Beverwijk" or key == "Gouda":
+                self.startstation.append(key)
+
+
         # Import all stations 
         with open('../Bijlage/StationsNationaal.csv', 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
@@ -53,15 +63,26 @@ class Routes():
         bestquality = 0
         besttime = 0
         besttraject = None
+<<<<<<< HEAD
         t_end = time.time() + 60 * 2
 
         while time.time() < t_end:
         # while randomcount < 500:
             maxtime = 160
             while maxtime <= 180:
+=======
+        t_end = time.time() + 60 * 0.5
+        t_start = time.time()
+        
+        while bestquality < 9210 and time.time() < t_end:
+            maxtime = 110
+            while maxtime <= 120:
+>>>>>>> 72ab25380521d897e4a8fc715e592918a951a63b
                 count = 1
                 amount += 1
                 self.trajects = {}
+
+                self.start = copy.deepcopy(self.startstation)
 
                 # Deepcopy allconnections twice to make sure all connections are available twice by making new trajects
                 self.allconnections = copy.deepcopy(self.connections)
@@ -72,10 +93,12 @@ class Routes():
                 self.connectioncopy = copy.deepcopy(self.connection)
 
                 # Make a maximum of 7 traject or when all connections are used with a random station as startstation
-                while len(self.allconnections2.keys()) != 0 and count <= 7:
-                    city = random.choice(list(self.allconnections2.keys()))
-                    self.maketraject(city, count, maxtime)
-                    count += 1
+                while len(self.allconnections2.keys()) != 0 and count <= 4:
+                    if self.start: 
+                        city = random.choice(self.start)
+                        self.maketraject(city, count, maxtime)
+                        self.start.remove(city)
+                        count += 1
                 
                 # Check if the new quality is higher than the previous quality
                 best = self.quality()
@@ -87,6 +110,7 @@ class Routes():
                     besttime = maxtime
                     tijd = time.time() - t_start
                     print("tijd {}".format(tijd))
+                    print("maxtime {}".format(besttime))
                     print("herhalingen {}".format(amount))
                     print("besttraject {}".format(besttraject))
                     print("bestquality {}".format(bestquality))
@@ -107,7 +131,7 @@ class Routes():
         traject.append(city)
         
         # Check if a new city can be added to the traject
-        while time < maxtime and count <= 7 and city in self.allconnections:
+        while time < maxtime and count <= 5 and city in self.allconnections:
             best_stop_time = 100
             best_stop_city = ""
 
