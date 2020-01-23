@@ -12,6 +12,9 @@ import csv
 import random
 import time
 
+from datetime import datetime
+from time import gmtime, strftime
+
 import matplotlib.pyplot as plt
 
 
@@ -57,11 +60,11 @@ class Routes():
         bestquality = 0
         besttime = 0
         besttraject = None
-        t_end = time.time() + 60 * 5
+        t_end = time.time() + 60 * 0.1
         t_start = time.time()
 
-        while time.time() < t_end:
-        # while randomcount < 1:
+        # while time.time() < t_end:
+        while randomcount < 1:
             maxtime = 100
             while maxtime <= 120:
                 count = 1
@@ -107,6 +110,7 @@ class Routes():
 
         print(besttraject)
         print(bestquality)
+        self.export(besttraject, bestquality)
         self.visualisation(besttraject)
 
 
@@ -203,6 +207,22 @@ class Routes():
         plt.title('Lijnvoering Noord- en Zuid-Holland')
         ax.legend(legendnumber, loc="best")
         plt.show()
+
+    
+    def export(self, besttraject, bestquality):
+        csv_file = "../Solutions/closest.csv"
+        date_now = datetime.now()
+        date = date_now.strftime("%Y-%m-%d %H:%M:%S")
+
+        with open(csv_file, "a", newline="") as csv_write:
+            writer = csv.writer(csv_write)
+            writer.writerow([date])
+
+            for key, value in besttraject.items():
+                writer.writerow([key, value])
+                
+            writer.writerow([bestquality])
+            writer.writerow([])
 
 
 if __name__ == "__main__":

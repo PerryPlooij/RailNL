@@ -12,6 +12,9 @@ import csv
 import random
 import time
 
+from datetime import datetime
+from time import strftime, gmtime
+
 import matplotlib.pyplot as plt
 
 
@@ -60,9 +63,8 @@ class Routes():
         t_end = time.time() + 60 * 5
         t_start = time.time()
 
-        while time.time() < t_end:
-        # while randomcount < 500:
-        # while bestquality != 9219.0:
+        # while time.time() < t_end:
+        while randomcount < 1:
             maxtime = 100
             while maxtime <= 120: # and bestquality != 9219.0:
                 amount += 1
@@ -106,10 +108,11 @@ class Routes():
 
             randomcount += 1
 
-        print(amount)
         print(besttraject)
         print(bestquality)
+        self.export(besttraject, bestquality)
         self.visualisation(besttraject)
+
 
     def maketraject(self, city, count, maxtime):
         """ Making a new traject with a given maxtime """
@@ -205,6 +208,22 @@ class Routes():
         plt.title('Lijnvoering Noord- en Zuid-Holland')
         ax.legend(legendnumber, loc="best")
         plt.show()
+
+
+    def export(self, besttraject, bestquality):
+        csv_file = "../Solutions/random_once.csv"
+        date_now = datetime.now()
+        date = date_now.strftime("%Y-%m-%d %H:%M:%S")
+
+        with open(csv_file, "a", newline="") as csv_write:
+            writer = csv.writer(csv_write)
+            writer.writerow([date])
+
+            for key, value in besttraject.items():
+                writer.writerow([key, value])
+                
+            writer.writerow([bestquality])
+            writer.writerow([])
 
 
 if __name__ == "__main__":

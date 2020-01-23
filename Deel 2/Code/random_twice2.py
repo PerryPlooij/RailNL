@@ -12,6 +12,9 @@ import csv
 import random
 import time
 
+from datetime import datetime
+from time import gmtime, strftime
+
 import matplotlib.pyplot as plt
 
 
@@ -88,6 +91,7 @@ class Routes():
         print(self.connectioncopy)
         print(besttraject)
         print(bestquality)
+        self.export(besttraject, bestquality)
         self.visualisation(besttraject)
 
     def maketraject(self, city, count, maxtime):
@@ -202,6 +206,22 @@ class Routes():
         plt.show()
 
     
+    def export(self, besttraject, bestquality):
+        csv_file = "../Solutions/random_twice.csv"
+        date_now = datetime.now()
+        date = date_now.strftime("%Y-%m-%d %H:%M:%S")
+
+        with open(csv_file, "a", newline="") as csv_write:
+            writer = csv.writer(csv_write)
+            writer.writerow([date])
+
+            for key, value in besttraject.items():
+                writer.writerow([key, value])
+                
+            writer.writerow([bestquality])
+            writer.writerow([])
+
+            
 if __name__ == "__main__":
     routes = Routes()
     routes.randomsolution()
