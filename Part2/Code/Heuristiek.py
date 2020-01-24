@@ -1,12 +1,3 @@
-# ********************************************************************************************
-# * random_once2.py
-# *
-# * PGT Party
-# *
-# * Timetable with every connection once and the startstation and connection randomly chosen.
-# ********************************************************************************************
-
-
 import copy
 import csv
 import random
@@ -52,18 +43,17 @@ class Routes():
         besttime = 0
         besttraject = None
         t_end = time.time() + 60 * 30
-        self.results = []
-
-        # while time.time() < t_end:
-        while randomcount < 10000:
-            maxtime = 160
+        self.best_fifty = []
+        #while time.time() < t_end:
+        while randomcount < 50:
+            maxtime = 180
             while maxtime <= 180:
                 count = 1
                 self.trajects = {}
 
                 # Deepcopy allconnections to make sure all connections are available by making new trajects
                 self.allconnections = copy.deepcopy(self.connections)
-                
+                self.allconnections2 = copy.deepcopy(self.connections)
                 # Deepcopy the total amount of connections (connectioncopy) to reduce the amount (connection)
                 # when making a new connection
                 self.connectioncopy = copy.deepcopy(self.connection)
@@ -71,52 +61,49 @@ class Routes():
                 # Make a maximum of 20 traject or when all connections are used with a random station as startstation
                 while len(self.allconnections.keys()) != 0 and count <= 20:
                     city = random.choice(list(self.allconnections.keys()))
-                    self.maketraject(city, count, maxtime)
+                    self.maketraject(city, count, 20, maxtime, self.allconnections, self.allconnections2)
                     count += 1
 
                 # Check if the new quality is higher than the previous quality
                 quality = self.quality()
-                self.results.append(int(quality))
-                if quality > bestquality:
-                    bestquality = quality
-                    besttraject = self.trajects
-                    besttime = maxtime
+                #if quality > bestquality:
+                    #bestquality = quality
+                    #besttraject = self.trajects
+                    #besttime = maxtime
+                self.best_fifty.append((self.trajects, quality))
 
                 maxtime += 1
-
             randomcount += 1
+        
+        
+        
+        #print(self.best_fifty)
+        #print(besttraject)
+        #print(bestquality)
+        #self.visualisation(besttraject)
 
-        # print(besttraject)
-        print(bestquality)
-        self.hist()
-        self.visualisation(besttraject)
-
-
-    def hist(self):
-        plt.hist(self.results, bins=15)
-        plt.xlabel("Score")
-        plt.ylabel("Count")
-        plt.title("random_once2")
-        plt.show
-
-
-    def maketraject(self, city, count, maxtime):
-        """ Making a new traject with a given maxtime """
-
+    def maketraject(self, city, count, maxcount, maxtime, lijst1, lijst2):
+        """ Making a new traject with the given maxtime """
+        
         endtime = 0
         time = 0
         traject = []
         traject.append(city)
         
+        #print(type(lijst2))
         # Check if a new city can be added to the traject
-        while time < maxtime and city in self.allconnections:
+        while time < maxtime and count <= maxcount and city in lijst1:
             best_stop_time = 100
             best_stop_city = ""
 
             # Search for a new station in the cityconnections
-            for i in range(len(self.allconnections[city])):
-                connection = random.choice(list(self.allconnections[city]))
-                time_traject = int(self.allconnections[city][connection])
+            for i in range(len(lijst1[city])):
+                if city in lijst2:
+                    connection = random.choice(list(lijst2[city]))
+                    time_traject = int(lijst2[city][connection])
+                else:
+                    connection = random.choice(list(lijst1[city]))
+                    time_traject = int(lijst1[city][connection])
 
                 # Add new station to the traject if the new time is less or equal to the maxtime
                 if time + time_traject <= maxtime:
@@ -125,18 +112,33 @@ class Routes():
                     break
         
             # If new city is found set time to new time and delete connection of allconnections
+            
             if best_stop_city != '':
                 time += best_stop_time
                 endtime = time
-                del self.allconnections[city][connection]
-                del self.allconnections[connection][city]
-                self.connectioncopy = self.connectioncopy - 1
 
-                if len(self.allconnections[city]) == 0:
-                    del self.allconnections[city]
+                 # Delete city and connection of the rigth dictionary
+                
+                if city in lijst2 and connection in lijst2[city]:
+                    del lijst2[city][connection]
+                    del lijst2[connection][city]
+                    
+                    self.connectioncopy = self.connectioncopy - 1
+                else:
+                    del lijst1[city][connection]
+                    del lijst1[connection][city]
 
-                if len(self.allconnections[connection]) == 0:
-                    del self.allconnections[connection]
+                if city in lijst2 and len(lijst2[city]) == 0:
+                    del lijst2[city]
+
+                if connection in lijst2 and len(lijst2[connection]) == 0:
+                    del lijst2[connection]
+
+                if len(lijst1[city]) == 0:
+                    del lijst1[city]
+
+                if len(lijst1[connection]) == 0:
+                    del lijst1[connection]
 
                 city = best_stop_city
                 traject.append(city)
@@ -151,8 +153,70 @@ class Routes():
                     endtime = int(connections[endcity])
                     traject.append(endcity)
 
+            
         self.trajects[count] = (traject, endtime)
+        
 
+
+    def heuristiek(self):
+        self.best_fifty.sort(key = lambda x: x[1])
+        self.best_fifty.reverse()
+        self.best_one = self.best_fifty[:1]
+
+        #print(self.best_one)
+        for items in self.best_fifty:
+            print(items[1])
+
+        
+
+        first_5 = {key: value for key, value in list(self.best_one[0][0].items())[:5]}
+        last_20 = {key: value for key, value in list(self.best_one[0][0].items())[5:]}
+        
+        stations = set()
+        for key, value in last_20.items():
+            for item in value[0]:
+                stations.add(item)
+
+        
+        connections = {}
+        for city in stations:
+            if city not in connections.keys():
+                connections[city] = self.connections[city]
+           
+        
+        unused = set()
+        for connection in connections.values():
+            for plaats in connection:
+                if plaats not in connections.keys():
+                    unused.add(plaats)
+
+        dict2 = {}
+        for place in unused:
+            dict1 = {}
+            for key, value in connections.items():
+                for city in value:
+                    if city == place:
+                        time = connections[key][city]
+                        dict1[key] = time
+                        dict2[place] = dict1
+
+                    
+        connections.update(dict2)
+        connections2 = copy.deepcopy(connections)
+        
+        
+        maxtime = 180
+        while maxtime <= 180:
+            count = 6
+            self.trajects = {}
+            while len(connections2.keys()) != 0 and count <= 20:
+                city = random.choice(list(connections2.keys()))
+                self.maketraject(city, count, 15,  maxtime, connections, connections2)
+                count += 1
+            
+            maxtime += 1
+        
+        print(self.trajects)
 
     def quality(self):
         """ Calculate quality of the created timetable """
@@ -199,3 +263,4 @@ class Routes():
 if __name__ == "__main__":
     routes = Routes()
     routes.randomsolution()
+    routes.heuristiek()

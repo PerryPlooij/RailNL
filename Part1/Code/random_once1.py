@@ -1,16 +1,19 @@
-# ****************************************************************************************************
-# * random_twice2.py
+# *******************************************************************************************
+# * random_once1.py
 # *
 # * PGT Party
 # *
-# * Timetable with every connection maximum twice and the startstation and connection randomly chosen.
-# ****************************************************************************************************
+# * Timetable with every connection once and the startstation and connection randomly chosen.
+# *******************************************************************************************
 
 
 import copy
 import csv
 import random
 import time
+
+from datetime import datetime
+from time import strftime, gmtime
 
 import matplotlib.pyplot as plt
 
@@ -19,22 +22,23 @@ class Routes():
     def __init__(self):
         self.connections = {}
         self.connection = 0
+        self.startstation = []
 
         # Import all connections of the stations
-        with open('../Bijlage/ConnectiesNationaal.csv', 'rt') as csv_file:
+        with open('../Bijlage/ConnectiesHolland.csv', 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
-            
+
             for row in reader: 
                 self.connection += 1
                 if row[0] not in self.connections:
                     self.connections[row[0]] = {}
-                self.connections[row[0]][row[1]] = int(float(row[2]))
+                self.connections[row[0]][row[1]] = row[2]
 
                 if row[1] not in self.connections:
                     self.connections[row[1]] = {}
-                self.connections[row[1]][row[0]] = int(float(row[2]))
-
-        # Import all stations
+                self.connections[row[1]][row[0]] = row[2]
+        
+        # Import all stations 
         with open('../Bijlage/StationsNationaal.csv', 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
             self.stations = {}
@@ -43,38 +47,52 @@ class Routes():
                 if row[0] not in self.stations:
                     self.stations[row[0]] = (float(row[2]),float(row[1]))
 
+        
+        for key, value in self.connections.items():
+            if len(value) == 1:
+                self.startstation.append(key)
 
     def randomsolution(self):
         """ Create random solution and check if a new solution is better than the previous solution  """
-        
+
+        amount = 0
         randomcount = 0
         bestquality = 0
         besttime = 0
         besttraject = None
-        t_end = time.time() + 60 * 30
+        t_end = time.time() + 60 * 5
+        t_start = time.time()
         self.results = []
 
         # while time.time() < t_end:
-        while randomcount < 10000:
-            maxtime = 160
-            while maxtime <= 180:
+        while randomcount < 1:
+            maxtime = 100
+            while maxtime <= 120: # and bestquality != 9219.0:
+                amount += 1
                 count = 1
                 self.trajects = {}
 
-                # Deepcopy allconnections twice to make sure all connections are available twice by making new trajects
+                self.start = copy.deepcopy(self.startstation)
+
+                # Deepcopy allconnections to make sure all connections are available by making new trajects
                 self.allconnections = copy.deepcopy(self.connections)
-                self.allconnections2 = copy.deepcopy(self.connections)
-                
+
                 # Deepcopy the total amount of connections (connectioncopy) to reduce the amount (connection)
                 # when making a new connection
                 self.connectioncopy = copy.deepcopy(self.connection)
-                
+
                 # Make a maximum of 7 traject or when all connections are used with a random station as startstation
-                while len(self.allconnections2.keys()) != 0 and count <= 20:
-                    city = random.choice(list(self.allconnections2.keys()))
-                    self.maketraject(city, count, maxtime)
-                    count += 1
-                
+                while len(self.allconnections.keys()) != 0 and count <= 5:
+                    if self.start: 
+                        city = random.choice(self.start)
+                        self.maketraject(city, count, maxtime)
+                        self.start.remove(city)
+                        count += 1
+                    else:
+                        city = random.choice(list(self.allconnections.keys()))
+                        self.maketraject(city, count, maxtime)
+                        count += 1
+
                 # Check if the new quality is higher than the previous quality
                 quality = self.quality()
                 self.results.append(int(quality))
@@ -82,27 +100,31 @@ class Routes():
                     bestquality = quality
                     besttraject = self.trajects
                     besttime = maxtime
+                    tijd = time.time() - t_start
+                    # print("tijd {}".format(tijd))
+                    # print("herhalingen {}".format(amount))
+                    # print("besttraject {}".format(besttraject))
+                    # print("bestquality {}".format(bestquality))
 
                 maxtime += 1
 
             randomcount += 1
 
-        # print(self.connectioncopy)
-        # print(besttraject)
+        print(besttraject)
         print(bestquality)
-        self.hist()
+        self.export(besttraject, bestquality)
         self.visualisation(besttraject)
-
-
+    
     def hist(self):
         plt.hist(self.results, bins=15)
         plt.xlabel("Score")
         plt.ylabel("Count")
-        plt.title("random_twice2")
+        plt.title("random_once1")
         plt.show
 
+
     def maketraject(self, city, count, maxtime):
-        """ Making a new traject with the given maxtime """
+        """ Making a new traject with a given maxtime """
         
         endtime = 0
         time = 0
@@ -110,18 +132,14 @@ class Routes():
         traject.append(city)
         
         # Check if a new city can be added to the traject
-        while time < maxtime and count <= 20 and city in self.allconnections:
+        while time < maxtime and city in self.allconnections:
             best_stop_time = 100
             best_stop_city = ""
 
             # Search for a new station in the cityconnections
             for i in range(len(self.allconnections[city])):
-                if city in self.allconnections2:
-                    connection = random.choice(list(self.allconnections2[city]))
-                    time_traject = int(self.allconnections2[city][connection])
-                else:
-                    connection = random.choice(list(self.allconnections[city]))
-                    time_traject = int(self.allconnections[city][connection])
+                connection = random.choice(list(self.allconnections[city]))
+                time_traject = int(self.allconnections[city][connection])
 
                 # Add new station to the traject if the new time is less or equal to the maxtime
                 if time + time_traject <= maxtime:
@@ -133,21 +151,9 @@ class Routes():
             if best_stop_city != '':
                 time += best_stop_time
                 endtime = time
-
-                 # Delete city and connection of the rigth dictionary
-                if city in self.allconnections2 and connection in self.allconnections2[city]:
-                    del self.allconnections2[city][connection]
-                    del self.allconnections2[connection][city]
-                    self.connectioncopy = self.connectioncopy - 1
-                else:
-                    del self.allconnections[city][connection]
-                    del self.allconnections[connection][city]
-
-                if city in self.allconnections2 and len(self.allconnections2[city]) == 0:
-                    del self.allconnections2[city]
-
-                if connection in self.allconnections2 and len(self.allconnections2[connection]) == 0:
-                    del self.allconnections2[connection]
+                del self.allconnections[city][connection]
+                del self.allconnections[connection][city]
+                self.connectioncopy = self.connectioncopy - 1
 
                 if len(self.allconnections[city]) == 0:
                     del self.allconnections[city]
@@ -188,7 +194,7 @@ class Routes():
     def visualisation(self, traject):
         """ Make a visualisation of the best timetable """
 
-        colors = ["green", "red", "aqua", "orange", "yellow", "lawngreen", "deepskyblue", "violet", "pink", "deeppink", "darkviolet", "grey", "salmon", "gold", "mediumseagreen", "mediumturquoise", "darkkhaki", "lightgoldenrodyellow", "silver", "navy"]
+        colors = ["green", "red", "aqua", "orange", "yellow", "lawngreen", "deepskyblue"]
         img = plt.imread("../../doc/kaart.png")
         fix, ax = plt.subplots()
         ax.imshow(img, extent=[3.1, 7.5, 50.6, 53.7])
@@ -199,7 +205,7 @@ class Routes():
         for value in traject.items():
             x_coor = []
             y_coor = []
-
+            
             for stations in value[1][0]:
                 x_coor.append(self.stations[stations][0])
                 y_coor.append(self.stations[stations][1])
@@ -208,11 +214,29 @@ class Routes():
             counter += 1
             legendnumber.append(counter) 
 
-        plt.title('Lijnvoering Nederland')
+        plt.title('Lijnvoering Noord- en Zuid-Holland')
         ax.legend(legendnumber, loc="best")
         plt.show()
 
-    
+
+    def export(self, besttraject, bestquality):
+        """ Export besttraject and bestquality to csv-file """
+        
+        csv_file = "../Solutions/random_once.csv"
+        date_now = datetime.now()
+        date = date_now.strftime("%Y-%m-%d %H:%M:%S")
+
+        with open(csv_file, "a", newline="") as csv_write:
+            writer = csv.writer(csv_write)
+            writer.writerow([date])
+
+            for key, value in besttraject.items():
+                writer.writerow([key, value])
+                
+            writer.writerow([bestquality])
+            writer.writerow([])
+
+
 if __name__ == "__main__":
     routes = Routes()
     routes.randomsolution()
