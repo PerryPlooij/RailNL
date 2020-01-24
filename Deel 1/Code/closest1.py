@@ -13,6 +13,7 @@ import random
 import time
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 class Routes():
@@ -59,9 +60,10 @@ class Routes():
         besttraject = None
         t_end = time.time() + 60 * 5
         t_start = time.time()
+        self.results = []
 
-        while time.time() < t_end:
-        # while randomcount < 1:
+        # while time.time() < t_end:
+        while randomcount < 10000:
             maxtime = 100
             while maxtime <= 120:
                 count = 1
@@ -91,22 +93,25 @@ class Routes():
 
                 # Check if the new quality is higher than the previous quality
                 quality = self.quality()
+                self.results.append(int(quality))
                 if quality > bestquality:
                     bestquality = quality
                     besttraject = self.trajects
                     besttime = maxtime
                     tijd = time.time() - t_start
-                    print("tijd {}".format(tijd))
-                    print("herhalingen {}".format(amount))
-                    print("besttraject {}".format(besttraject))
-                    print("bestquality {}".format(bestquality))
+                    # print("tijd {}".format(tijd))
+                    # print("herhalingen {}".format(amount))
+                    # print("besttraject {}".format(besttraject))
+                    # print("bestquality {}".format(bestquality))
 
                 maxtime += 1
                 
             randomcount += 1
 
-        print(besttraject)
-        print(bestquality)
+        # print(besttraject)
+        # print(bestquality)
+        print(self.results)
+        self.hist()
         self.visualisation(besttraject)
 
 
@@ -176,7 +181,13 @@ class Routes():
         K = p * 10000 - (T * 100 + minutes)
         return K
 
-        
+    def hist(self):
+        plt.hist(self.results, bins=15)
+        plt.xlabel("Score")
+        plt.ylabel("Count")
+        plt.title("closest_1")
+        plt.show
+
     def visualisation(self, traject):
         """ Make a visualisation of the best timetable """
 

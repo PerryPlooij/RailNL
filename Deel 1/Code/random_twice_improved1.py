@@ -63,21 +63,14 @@ class Routes():
         bestquality = 0
         besttime = 0
         besttraject = None
-<<<<<<< HEAD
-        t_end = time.time() + 60 * 2
-
-        while time.time() < t_end:
-        # while randomcount < 500:
-            maxtime = 160
-            while maxtime <= 180:
-=======
         t_end = time.time() + 60 * 0.5
         t_start = time.time()
+        self.results = []
         
-        while bestquality < 9210 and time.time() < t_end:
-            maxtime = 110
+        while randomcount < 10000:
+        # while bestquality < 9210 and time.time() < t_end:
+            maxtime = 100
             while maxtime <= 120:
->>>>>>> 72ab25380521d897e4a8fc715e592918a951a63b
                 count = 1
                 amount += 1
                 self.trajects = {}
@@ -103,23 +96,33 @@ class Routes():
                 # Check if the new quality is higher than the previous quality
                 best = self.quality()
                 best = self.improve(best)
+                self.results.append(int(best))
 
                 if best > bestquality:
                     bestquality = best
                     besttraject = self.trajects
                     besttime = maxtime
                     tijd = time.time() - t_start
-                    print("tijd {}".format(tijd))
-                    print("maxtime {}".format(besttime))
-                    print("herhalingen {}".format(amount))
-                    print("besttraject {}".format(besttraject))
-                    print("bestquality {}".format(bestquality))
+                    # print("tijd {}".format(tijd))
+                    # print("maxtime {}".format(besttime))
+                    # print("herhalingen {}".format(amount))
+                    # print("besttraject {}".format(besttraject))
+                    # print("bestquality {}".format(bestquality))
 
                 maxtime += 1
 
             randomcount += 1
-
+        print(bestquality)
+        self.hist()
         self.visualisation(besttraject)
+
+
+    def hist(self):
+        plt.hist(self.results, bins=15)
+        plt.xlabel("Score")
+        plt.ylabel("Count")
+        plt.title("random_twice_improved1")
+        plt.show
 
 
     def maketraject(self, city, count, maxtime):

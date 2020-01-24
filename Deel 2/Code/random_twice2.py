@@ -52,9 +52,10 @@ class Routes():
         besttime = 0
         besttraject = None
         t_end = time.time() + 60 * 30
+        self.results = []
 
         # while time.time() < t_end:
-        while randomcount < 100:
+        while randomcount < 10000:
             maxtime = 160
             while maxtime <= 180:
                 count = 1
@@ -76,6 +77,7 @@ class Routes():
                 
                 # Check if the new quality is higher than the previous quality
                 quality = self.quality()
+                self.results.append(int(quality))
                 if quality > bestquality:
                     bestquality = quality
                     besttraject = self.trajects
@@ -85,10 +87,19 @@ class Routes():
 
             randomcount += 1
 
-        print(self.connectioncopy)
-        print(besttraject)
+        # print(self.connectioncopy)
+        # print(besttraject)
         print(bestquality)
+        self.hist()
         self.visualisation(besttraject)
+
+
+    def hist(self):
+        plt.hist(self.results, bins=15)
+        plt.xlabel("Score")
+        plt.ylabel("Count")
+        plt.title("random_twice2")
+        plt.show
 
     def maketraject(self, city, count, maxtime):
         """ Making a new traject with the given maxtime """
