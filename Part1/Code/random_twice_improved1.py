@@ -8,15 +8,10 @@
 # ****************************************************************************************************
 
 
-import copy
-import csv
-import random
-import time
-
-from datetime import datetime
-from time import strftime, gmtime
-
+import copy, csv, random, time
 import matplotlib.pyplot as plt
+from datetime import datetime
+from time import strftime
 
 
 class Routes():
@@ -24,10 +19,9 @@ class Routes():
         self.connections = {}
         self.connection = 0
         self.startstation = []
-        self.bigstation = []
         
         # Import all connections of the stations
-        with open('../Bijlage/ConnectiesHolland.csv', 'rt') as csv_file:
+        with open('../Attachment/ConnectiesHolland.csv', 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
             
             for row in reader: 
@@ -49,7 +43,7 @@ class Routes():
 
 
         # Import all stations 
-        with open('../Bijlage/StationsNationaal.csv', 'rt') as csv_file:
+        with open('../Attachment/StationsNationaal.csv', 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
             self.stations = {}
 
@@ -61,21 +55,16 @@ class Routes():
     def randomsolution(self):
         """ Create random solution and check if a new solution is better than the previous solution  """
 
-        amount = 0
-        randomcount = 0
         bestquality = 0
-        besttime = 0
         besttraject = None
-        t_end = time.time() + 60 * 0.5
-        t_start = time.time()
-        self.results = []
+
+        # Set the runetime, 60 * 0.1 = runtime of 6 seconds
+        t_end = time.time() + 60 * 0.1
         
-        while randomcount < 1:
-        # while time.time() < t_end:
+        while time.time() < t_end:
             maxtime = 110
             while maxtime <= 120:
                 count = 1
-                amount += 1
                 self.trajects = {}
 
                 self.start = copy.deepcopy(self.startstation)
@@ -99,33 +88,16 @@ class Routes():
                 # Check if the new quality is higher than the previous quality
                 best = self.quality()
                 best = self.improve(best)
-                self.results.append(int(best))
 
                 if best > bestquality:
                     bestquality = best
                     besttraject = self.trajects
-                    besttime = maxtime
-                    tijd = time.time() - t_start
-                    # print("tijd {}".format(tijd))
-                    # print("maxtime {}".format(besttime))
-                    # print("herhalingen {}".format(amount))
-                    # print("besttraject {}".format(besttraject))
-                    # print("bestquality {}".format(bestquality))
 
                 maxtime += 1
 
-            randomcount += 1
-
+        print(bestquality)
         self.export(besttraject, bestquality)
         self.visualisation(besttraject)
-
-
-    def hist(self):
-        plt.hist(self.results, bins=15)
-        plt.xlabel("Score")
-        plt.ylabel("Count")
-        plt.title("random_twice_improved1")
-        plt.show
 
 
     def maketraject(self, city, count, maxtime):

@@ -8,15 +8,10 @@
 # ****************************************************************************************************
 
 
-import copy
-import csv
-import random
-import time
-
-from datetime import datetime
-from time import gmtime, strftime
-
+import copy, csv, random, time
 import matplotlib.pyplot as plt
+from datetime import datetime
+from time import strftime
 
 
 class Routes():
@@ -26,7 +21,7 @@ class Routes():
         self.startstation = []
 
         # Import all connections of the stations
-        with open('../Bijlage/ConnectiesNationaal.csv', 'rt') as csv_file:
+        with open('../Attachment/ConnectiesNationaal.csv', 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
             
             for row in reader: 
@@ -40,7 +35,7 @@ class Routes():
                 self.connections[row[1]][row[0]] = int(float(row[2]))
         
         # Import all stations 
-        with open('../Bijlage/StationsNationaal.csv', 'rt') as csv_file:
+        with open('../Attachment/StationsNationaal.csv', 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
             self.stations = {}
 
@@ -56,22 +51,15 @@ class Routes():
     def randomsolution(self):
         """ Create random solution and check if a new solution is better than the previous solution  """
 
-        grafiek = {}
-        amount = 0
-        randomcount = 0
         bestquality = 0
-        besttime = 0
         besttraject = None
-        t_end = time.time() + 60 * 6
-        t_start = time.time()
-        self.results = []
 
-        # while time.time() < t_end:
-        while randomcount < 10000:
-        # while bestquality < 7500:
+        # Set the runetime, 60 * 0.1 = runtime of 6 seconds
+        t_end = time.time() + 60 * 0.1
+
+        while time.time() < t_end:
             maxtime = 160
             while maxtime <= 180:
-                amount += 1
                 count = 1
                 self.trajects = {}
 
@@ -88,48 +76,27 @@ class Routes():
                 # Make a maximum of 20 traject or when all connections are used with a random station as startstation
                 while len(self.allconnections2.keys()) != 0 and count <= 12:
                     if self.start:
-                        city = self.start[0] 
-                        # city = random.choice(self.start)
+                        city = self.start[0]
                         self.maketraject(city, count, maxtime)
                         self.start.remove(city)
-                        count += 1
                     else:
                         city = random.choice(list(self.allconnections2.keys()))
                         self.maketraject(city, count, maxtime)
-                        count += 1
+                    count += 1
                     
                 # Check if the new quality is higher than the previous quality
                 best = self.quality()
                 best = self.improve(best)
-                self.results.append(int(best))
 
                 if best > bestquality:
                     bestquality = best
                     besttraject = self.trajects
-                    besttime = maxtime
-                    tijd = time.time() - t_start
-                    # print("tijd {}".format(tijd))
-                    # print("maxtime {}".format(besttime))
-                    # print("herhalingen {}".format(amount))
-                    # print("besttraject {}".format(besttraject))
-                    # print("bestquality {}".format(bestquality))
 
                 maxtime += 1
 
-            randomcount += 1
-
-        # print(besttraject)
         print(bestquality)
         self.export(besttraject, bestquality)
         self.visualisation(besttraject)
-
-
-    def hist(self):
-        plt.hist(self.results, bins=15)
-        plt.xlabel("Score")
-        plt.ylabel("Count")
-        plt.title("random_twice_improved2")
-        plt.show
 
 
     def maketraject(self, city, count, maxtime):
