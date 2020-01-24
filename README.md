@@ -25,5 +25,5 @@ To run the code, use the following instruction:
 * Tom van Rooijen
 
 ## Acknowledgement
-We want to thank someone
+We want to thank Nigel and Reitze for helping us throughout the course of the project. We also want to thank our fellow students for attending our presentation and providing us with feedback, tips and ideas.
 
