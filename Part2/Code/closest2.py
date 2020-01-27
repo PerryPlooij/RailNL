@@ -7,15 +7,10 @@
 # ************************************************************************************************
 
 
-import copy
-import csv
-import random
-import time
-
-from datetime import datetime
-from time import gmtime, strftime
-
+import copy, csv, random, time
 import matplotlib.pyplot as plt
+from datetime import datetime
+from time import strftime
 
 
 class Routes():
@@ -24,7 +19,7 @@ class Routes():
         self.connection = 0
 
         # Import all connections of the stations
-        with open('../Bijlage/ConnectiesNationaal.csv', 'rt') as csv_file:
+        with open('../Attachment/ConnectiesNationaal.csv', 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
             
             for row in reader: 
@@ -38,7 +33,7 @@ class Routes():
                 self.connections[row[1]][row[0]] = int(float(row[2]))
         
         # Import all stations
-        with open('../Bijlage/StationsNationaal.csv', 'rt') as csv_file:
+        with open('../Attachment/StationsNationaal.csv', 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',')
             self.stations = {}
 
@@ -50,15 +45,14 @@ class Routes():
     def heuristiek(self):
         """ Create random solution and check if a new solution is better than the previous solution  """
 
-        randomcount = 0
         bestquality = 0
-        besttime = 0
         besttraject = None
-        t_end = time.time() + 60 * 30
+
+        # Set the runetime, 60 * 0.1 = runtime of 6 seconds
+        t_end = time.time() + 60 * 0.1
 
         while time.time() < t_end:
-        # while randomcount < 1:
-            maxtime = 0
+            maxtime = 160
             while maxtime <= 180:
                 count = 1
                 self.trajects = {}
@@ -81,13 +75,9 @@ class Routes():
                 if quality > bestquality:
                     bestquality = quality
                     besttraject = self.trajects
-                    besttime = maxtime
 
                 maxtime += 1
 
-            randomcount += 1
-
-        print(besttraject)
         print(bestquality)
         self.export(besttraject, bestquality)
         self.visualisation(besttraject)
