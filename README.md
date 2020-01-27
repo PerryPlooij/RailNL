@@ -1,11 +1,12 @@
 # RailNL
-This Readme.md gives a short explanation about the RailNL case.
+This Readme.md gives a short explanation about the RailNL case.\
+Created by PGT Party
 
 ## Getting Started
 ![Rail Map](doc/Rail_Map.png)
 
 ### Assignment
-The assignment of this project is to create an algorithm within python that generates a train lining system for intercity trains that optimizes the overall quality of the train lining system. This can be done by maximizing the objective function given in the excercise. There are two conditions that have to be met when creating a train lining system. The first one is that a pathway has a maximum time length and the second condition is that a train lining system has a maximum number of pathways.
+The assignment of this project is to create an algorithm within python that generates a train lining system for intercity trains that optimizes the overall quality of the train lining system. This can be done by maximizing the objective function given in the excercise. The objective function can be described as follows: K = p * 10000 - (T * 100 + Min). There are two conditions that have to be met when creating a train lining system. The first one is that a pathway has a maximum time length and the second condition is that a train lining system has a maximum number of pathways.
 
 ### Method
 The methods and algorithms which are used to create a solution are described in the README.md files in the "part/code" folders.
@@ -19,8 +20,6 @@ To run the code, use the following instruction:
 <pre> python main.py </pre>
 
 ## Authors
-PGT Party
-
 * Gaby Hageman
 * Perry Plooij
 * Tom van Rooijen
