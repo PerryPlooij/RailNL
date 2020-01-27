@@ -1,6 +1,5 @@
 # RailNL
-This Readme.md gives a short explanation about the RailNL case.\
-Created by **PGT Party**
+This Readme.md gives a short explanation about the RailNL case.
 
 ## Getting Started
 ![Rail Map](doc/Rail_Map.png)
@@ -19,7 +18,16 @@ The code is fully written in python. The file 'requirements.txt' contains all pa
 To run the code, use the following instruction:
 <pre> python main.py </pre>
 
+
+## Attachment
+The attachment folder contains files we received from the minor to get things started. 
+
+## Solutions
+
+
 ## Authors
+**PGT Party**
+
 * Gaby Hageman
 * Perry Plooij
 * Tom van Rooijen
