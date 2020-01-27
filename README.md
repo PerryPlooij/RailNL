@@ -1,7 +1,7 @@
 # RailNL
 This Readme.md gives a short explanation about the RailNL case.
 
-## Getting Started
+### Getting Started
 ![Rail Map](doc/Rail_Map.png)
 
 #### Assignment
@@ -25,13 +25,13 @@ The attachment folder contains files we received from the minor to get things st
 #### Solutions
 
 
-## Authors
+### Authors
 **PGT Party**
 
 * Gaby Hageman
 * Perry Plooij
 * Tom van Rooijen
 
-## Acknowledgement
+### Acknowledgement
 We want to thank Nigel and Reitze for helping us throughout the course of the project. We also want to thank our fellow students for attending our presentation and providing us with feedback, tips and ideas.
 
