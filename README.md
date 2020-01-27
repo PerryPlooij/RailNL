@@ -5,10 +5,10 @@ This Readme.md gives a short explanation about the RailNL case.
 ![Rail Map](doc/Rail_Map.png)
 
 ### Assignment
-The assignment of this project is to create an algorithm within python that generates a train lining system that optimizes the overall quality of the lining system. This can be done by maximizing the objective function given in the excercise.
+The assignment of this project is to create an algorithm within python that generates a train lining system for intercity trains that optimizes the overall quality of the train lining system. This can be done by maximizing the objective function given in the excercise. There are two conditions that have to be met when creating a train lining system. The first one is that a pathway has a maximum time length and the second condition is that a train lining system has a maximum number of pathways.
 
 ### Method
-The methods and algorithms which are used to create a solution are described in the README.md files in the "part" folders.
+The methods and algorithms which are used to create a solution are described in the README.md files in the "part/code" folders.
 
 ### Prerequisites
 The code is fully written in python. The file 'requirements.txt' contains all packages to run the progrem succesfully. These packages are easy installable with the following instruction:
