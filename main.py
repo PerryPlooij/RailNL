@@ -2,7 +2,7 @@ from Code.Classes import load, solution
 from Code.Heuristics import greedy
 from Code.Heuristics import random_once
 from Code.Heuristics import random_twice
-from Code.Heuristics import random_twice_improved
+from Code.Heuristics import depth_first
 
 
 if __name__ == '__main__':
@@ -11,31 +11,23 @@ if __name__ == '__main__':
 
     # ----------------------------------------------- Part 1 ------------------------------------------------
 
+    # name = "Part1"
     # timeframe = 120
     # maxtrajects = 7
     # connection_national = 'Attachment/ConnectiesHolland.csv'
 
-    # delete_station = ""
-    # if delete_station:
-    #     name = "Advanced"
-    # else:
-    #     name = "Part1"
+
         
-    # import_info = load.Load(connection_national, stations, delete_station)
+    # import_info = load.Load(connection_national, stations)
 
     # ----------------------------------------------- Part 2 ------------------------------------------------
 
+    name = "Part2"
     timeframe = 180
     maxtrajects = 20
     connection_national = 'Attachment/ConnectiesNationaal.csv'
 
-    delete_station = ""
-    if delete_station:
-        name = "Advanced"
-    else:
-        name = "Part2"
-
-    import_info = load.Load(connection_national, stations, delete_station)
+    import_info = load.Load(connection_national, stations)
     
     # ------------------------------------------- Greedy ------------------------------------------
 
@@ -52,9 +44,9 @@ if __name__ == '__main__':
     # best = random_twice.Routes(import_info.connections, import_info.stations, timeframe, maxtrajects)
     # file = 'Solutions/{}/random_twice.csv'.format(name)
 
-    # ------------------------------------ Random twice with improvement ------------------------------------
+    # ------------------------------------ Depth first ------------------------------------
 
-    best = random_twice_improved.Routes(import_info.connections, import_info.stations, timeframe, maxtrajects)
+    best = depth_first.Routes(import_info.connections, import_info.stations, timeframe, maxtrajects)
     file = 'Solutions/{}/random_twice_improved.csv'.format(name)
 
     # ------------------------------------- Besttraject and bestquality -------------------------------------
