@@ -16,9 +16,11 @@ The code is fully written in python. The file 'requirements.txt' contains all pa
 
 ### Testing
 To run the code, use the following instruction:
-<pre> python code.py </pre>
+<pre> python main.py </pre>
 
 ## Authors
+PGT Party
+
 * Gaby Hageman
 * Perry Plooij
 * Tom van Rooijen
