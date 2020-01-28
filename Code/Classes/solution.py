@@ -9,7 +9,10 @@ import matplotlib.pyplot as plt
 
 def visualisation(traject, all_stations):
     """ 
-        Make a visualisation of the best train lining system based on the coordinates of the stations and the trajects. 
+        Make a visualisation of the best train lining system based on the coordinates of the stations and the trajects.
+        The visualisation contains a map of the Netherlands on which the stations that appear in a route are shown. 
+        The stations in a traject are connected with a colored line. Every traject has is own color that is also shown
+        in the legend.
     """
 
     colors = ["green", "red", "aqua", "orange", "yellow", "lawngreen", "deepskyblue", "violet", "pink", "deeppink", "darkviolet", "grey", "salmon", "gold", "mediumseagreen", "mediumturquoise", "darkkhaki", "chocolate", "silver", "navy"]
