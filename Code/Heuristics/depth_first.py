@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 from time import strftime
 
-from Code import quality
+from Code.Classes import quality
 
 
 class Routes():
@@ -35,7 +35,7 @@ class Routes():
         besttraject = None
 
         # Set the runetime, 60 * 0.1 = runtime of 6 seconds
-        t_end = time.time() + 60 * 0.5
+        t_end = time.time() + 60 * 0.1
 
         while time.time() < t_end:
             maxtime = self.timeframe - 20
@@ -65,7 +65,7 @@ class Routes():
                     count += 1
 
                 # Check if the new quality is higher than the previous quality
-                new_quality = quality.Quality(self.connectioncopy, self.connection, self.trajects).quality
+                new_quality = quality.calculate_quality(self.connectioncopy, self.connection, self.trajects)
                 new_quality = self.improve(new_quality)
 
                 if new_quality > bestquality:
@@ -204,7 +204,7 @@ class Routes():
                                 self.trajects[key1] = tuple(listtraject)
                                 break
 
-            new = quality.Quality(self.connectioncopy, self.connection, self.trajects).quality
+            new = quality.calculate_quality(self.connectioncopy, self.connection, self.trajects)
             if new == best:
                 run = False
             else:

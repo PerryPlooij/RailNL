@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 from time import gmtime, strftime
 
-from Code import quality
+from Code.Classes import quality
 
 
 class Routes():
@@ -66,7 +66,7 @@ class Routes():
                     count += 1
 
                 # Check if the new quality is higher than the previous quality
-                new_quality = quality.Quality(self.connectioncopy, self.connection, self.trajects).quality
+                new_quality = quality.calculate_quality(self.connectioncopy, self.connection, self.trajects)
 
                 if new_quality > bestquality:
                     bestquality = new_quality
@@ -100,7 +100,7 @@ class Routes():
 
                 # Add new station to the traject if the new time is less or equal to the maxtime
                 if time + time_traject <= maxtime:
-                    best_stop_time = connectiontime
+                    best_stop_time = time_traject
                     best_stop_city = connection
                     break
 
