@@ -36,7 +36,7 @@ class Greedy:
         besttraject = None
 
         # Set the runtime of the heuristic, 60 * 0.1 = runtime of 6 seconds.
-        t_end = time.time() + 60 * 10
+        t_end = time.time() + 60 * 0.1
 
         while time.time() < t_end:
             maxtime = self.timeframe - 20
