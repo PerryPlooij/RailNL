@@ -5,13 +5,13 @@ This Readme.md gives a short explanation about the RailNL case.
 ![Rail Map](doc/Rail_Map.png)
 
 #### Assignment
-The assignment of this project is to create an algorithm within python that generates a lining system for intercity trains with the goal to optimize the overall quality of the train lining system. This can be done by maximizing the objective function given in the excercise. The objective function can be described as follows: K = p * 10000 - (T * 100 + Min). Where K is the quality of the train lining system, p is a fraction of the amount of connections used, T is the amount of trajects used and Min is the total time in minutes of all used trajects. There are two conditions that have to be met when creating a train lining system. The first one is that a pathway has a maximum time length and the second condition is that a train lining system has a maximum number of pathways.
+The assignment of this project is to create an algorithm within python that generates a lining system for intercity trains with the goal to optimize the overall quality of the train lining system. This can be done by maximizing the objective function given in the excercise. The objective function can be described as follows: K = p * 10000 - (T * 100 + Min). Where K is the quality of the train lining system, p is a fraction of the amount of connections used, T is the amount of pathways used and Min is the total time in minutes of all used pathways. There are two conditions that have to be met when creating a train lining system. The first one is that a pathway has a maximum time length and the second condition is that a train lining system has a maximum number of pathways.
 
 #### Method
 The methods and heuristics which are used to create a solution are described in the README.md files in the "part/code" folders.
 
 #### Prerequisites
-The code is fully written in python. The file 'requirements.txt' contains all packages to run the progrem succesfully. These packages are easy installable with the following instruction:
+The code is fully written in python. The file 'requirements.txt' contains all packages to run the program succesfully. These packages are easy installable with the following instruction:
 <pre> pip install -r requirements.txt </pre>
 
 #### Testing
@@ -30,6 +30,7 @@ The Attachment folder contains files we received from the minor to get things st
 ### Authors
 Team name: **PGT Party**
 
+Team members:
 * Gaby Hageman
 * Perry Plooij
 * Tom van Rooijen
