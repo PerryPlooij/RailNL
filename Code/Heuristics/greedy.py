@@ -13,10 +13,10 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 from time import gmtime, strftime
 
-from Code import quality
+from Code.Classes import quality
 
 
-class Routes():
+class Greedy():
     def __init__(self, stationconnections, stations, timeframe, maxtrajects):
         self.connections = stationconnections[0]
         self.connection = stationconnections[1]
@@ -28,7 +28,7 @@ class Routes():
 
         self.traject = self.heuristiek()
 
-    def heuristiek(self):
+    def randomsolution(self):
         """ Create random solution and check if a new solution is better than the previous solution  """
         
         bestquality = 0
@@ -64,7 +64,7 @@ class Routes():
                     count += 1
 
                 # Check if the new quality is higher than the previous quality
-                new_quality = quality.Quality(self.connectioncopy, self.connection, self.trajects).quality
+                new_quality = quality.calculate_quality(self.connectioncopy, self.connection, self.trajects)
 
                 if new_quality > bestquality:
                     bestquality = new_quality
