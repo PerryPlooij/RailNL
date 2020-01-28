@@ -41,7 +41,8 @@ def visualisation(traject, all_stations):
 
 def export(file, traject, quality):
     """ 
-        Export the traject with the highest quality to a csv-file associated with the heuristic performed.  
+        Export the best train lining system with corresponding quality to the csv-file that corresponds to the 
+        chosen part of the case and the chosen heuristic.
     """
     
     date_now = datetime.now()

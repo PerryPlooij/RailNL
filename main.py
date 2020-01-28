@@ -61,18 +61,18 @@ if __name__ == '__main__':
     # ---------------------------------------- Heuristic / algoritms ----------------------------------------
     
     # Run the Greedy algorithm 
-    if args.heuristic == 1:   
-        best = greedy.Routes(import_info.connections, import_info.stations, timeframe, maxtrajects)
+    if args.heuristic == 1: 
+        best = greedy.Greedy(import_info.connections, import_info.stations, timeframe, maxtrajects)
         file = 'Solutions/{}/greedy.csv'.format(name)
     
     # Run heuristic 'random_once' where every connection is chosen once
     elif args.heuristic == 2: 
-        best = random_once.Routes(import_info.connections, import_info.stations, timeframe, maxtrajects)
+        best = random_once.Random_once(import_info.connections, import_info.stations, timeframe, maxtrajects)
         file = 'Solutions/{}/random_once.csv'.format(name)
     
     # Run heuristic 'random twice' where a connection is chosen once or twice
     elif args.heuristic == 3:
-        best = random_twice.Routes(import_info.connections, import_info.stations, timeframe, maxtrajects)
+        best = random_twice.Random_twice(import_info.connections, import_info.stations, timeframe, maxtrajects)
         file = 'Solutions/{}/random_twice.csv'.format(name)
     
     # Run the depth first algoritm

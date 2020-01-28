@@ -1,12 +1,3 @@
-# ************************************************************************************************
-# * random_once.py
-# *
-# * PGT Party
-# *
-# * Timetable with every connection once and the startstation and connection randomly chosen.
-# ************************************************************************************************
-
-
 import copy, csv, random, time
 import matplotlib.pyplot as plt
 
@@ -16,7 +7,13 @@ from time import gmtime, strftime
 from Code.Classes import quality
 
 
-class Routes():
+class Random_once:
+    """
+        When creating a traject, a station from the list of startstation is chosen randomly. From this station,
+        a random station of the connections is chosen to make a connection with. A connection can only appear once
+        in the created train lining system.
+    """
+
     def __init__(self, stationconnections, stations, timeframe, maxtrajects):
         self.connections = stationconnections[0]
         self.connection = stationconnections[1]
@@ -26,33 +23,35 @@ class Routes():
         self.timeframe = timeframe
         self.maxtrajects = maxtrajects
 
-        self.traject = self.heuristiek()
+        self.traject = self.randomsolution()
 
     def randomsolution(self):
-        """ Create random solution and check if a new solution is better than the previous solution  """
-        
+        """ 
+            Create a lining system and check if a new solution is better than te previous solution.
+            A traject starts at a station from the list with startstations. When all startstation are used, 
+            a startstation is chosen randomly of the other stations.
+        """
+
         bestquality = 0
         besttraject = None
 
-        # Set the runetime, 60 * 0.1 = runtime of 6 seconds
+        # Set the runtime of the heuristic, 60 * 0.1 = runtime of 6 seconds
         t_end = time.time() + 60 * 0.1
 
         while time.time() < t_end:
             maxtime = self.timeframe - 20
+
             while maxtime <= self.timeframe:
                 count = 1
                 self.trajects = {}
 
+                # Deepcopy some variables to delete a value of the variable while creating a lining system.
+                # Because of deepcopy, all values can be used again when a new lining system is made.
                 self.start = copy.deepcopy(self.startstation)
-
-                # Deepcopy allconnections to make sure all connections are available by making new trajects
                 self.allconnections = copy.deepcopy(self.connections)
-
-                # Deepcopy the total amount of connections (connectioncopy) to reduce the amount (connection)
-                # when making a new connection
                 self.connectioncopy = copy.deepcopy(self.connection)
 
-                # Make a maximum of 7 traject or when all connections are used with a random station as startstation
+                # Make a maximum of maxtrajects or when all connections are used with a random station as startstation
                 while len(self.allconnections.keys()) != 0 and count <= self.maxtrajects:
                     if self.start: 
                         city = random.choice(self.start)
@@ -75,7 +74,11 @@ class Routes():
         return besttraject, bestquality
 
     def maketraject(self, city, count, maxtime):
-        """ Making a new traject with a given maxtime """
+        """
+            Making a traject starts with the chosen station in 'randomsolution'. The next station of the traject is
+            chosen by taking a random station of all connections. This heuristic uses every connection once so when 
+            a connection is made, the connection is deleted. 
+        """
 
         endtime = 0
         time = 0
@@ -94,7 +97,7 @@ class Routes():
                 
                 # Add new station to the traject if the new time is less or equal to the maxtime
                 if time + time_traject < maxtime:
-                    best_stop_time = connectiontime
+                    best_stop_time = time_traject
                     best_stop_city = connection
                     break
             
