@@ -18,8 +18,10 @@ The code is fully written in python. The file 'requirements.txt' contains all pa
 To run the code, use the following instruction:
 <pre> python main.py -h </pre>
 
-After running this command, the user gets prompted to make a decision of what heuristic he/she wants to run and which area he/she wants to
-use to run the heuristic on. An example of what the user can expect can be seen in the image below.
+After running this command, the user gets prompted to make a decision which area he/she wants to
+use for the heuristic and what heuristic he/she wants to use. 
+An example of what the user can expect can be seen in the image below.\
+
 ![Command](doc/command.png)
 
 #### Attachment
