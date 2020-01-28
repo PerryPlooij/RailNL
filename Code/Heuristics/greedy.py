@@ -26,7 +26,7 @@ class Greedy():
         self.timeframe = timeframe
         self.maxtrajects = maxtrajects
 
-        self.traject = self.heuristiek()
+        self.traject = self.randomsolution()
 
     def randomsolution(self):
         """ Create random solution and check if a new solution is better than the previous solution  """
