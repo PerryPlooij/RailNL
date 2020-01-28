@@ -1,10 +1,10 @@
 import csv
 
 
-class Load():
+class Load:
     """ 
         This class contains a function to import all connections of the station to a dictionary and a function to 
-        import all stations with the corresponding coordinates. 
+        import all stations with the corresponding coordinates to a list. 
     """
 
     def __init__(self, connection_file, station_file):

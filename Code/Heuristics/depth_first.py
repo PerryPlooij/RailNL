@@ -36,8 +36,8 @@ class Depth_first:
         bestquality = 0
         besttraject = None
 
-        # Set the runetime, 60 * 0.1 = runtime of 6 seconds
-        t_end = time.time() + 60 * 0.1
+        # Set the runetime, 60 * 0.1 = runtime of 6 seconds.
+        t_end = time.time() + 60 * 10
 
         while time.time() < t_end:
             maxtime = self.timeframe - 20
@@ -155,7 +155,7 @@ class Depth_first:
         while run:
             for key1, value1 in self.trajects.items():
 
-                # Check if connection at beginning of traject exists in other traject
+                # Check if connection at beginning of traject exists in other traject.
                 if len(value1[0]) >= 2:
                     beginbegin = value1[0][0]
                     beginend = value1[0][1]
@@ -173,7 +173,7 @@ class Depth_first:
                                 newtime = time - int(self.connections[beginend][beginbegin])
                                 add = True
 
-                            # Delete startstation and change trajecttime
+                            # Delete startstation and change trajecttime.
                             if add:
                                 del self.trajects[key1][0][0]
                                 listtraject = list(self.trajects[key1])
@@ -181,7 +181,7 @@ class Depth_first:
                                 self.trajects[key1] = tuple(listtraject)
                                 break
 
-                # Check if connection at end of traject exists in other traject
+                # Check if a connection at the end of a traject exists in another traject.
                 if len(value1[0]) >= 2:
                     endbegin = value1[0][-2]
                     endend = value1[0][-1]
@@ -199,7 +199,7 @@ class Depth_first:
                                 newtime = time - int(self.connections[endend][endbegin])
                                 add = True
 
-                            # Delete endstation and change trajecttime
+                            # Delete endstation and change trajecttime.
                             if add:
                                 del self.trajects[key1][0][-1]
                                 listtraject = list(self.trajects[key1])

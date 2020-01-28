@@ -22,7 +22,7 @@ def visualisation(traject, all_stations):
     counter = 0
     legendnumber = []
 
-    # Retrieve coordinates of stations in the trajects
+    # Retrieve coordinates of the stations in the trajects.
     for value in traject.items():
         x_coor = []
         y_coor = []
@@ -31,6 +31,7 @@ def visualisation(traject, all_stations):
             x_coor.append(all_stations[stations][0])
             y_coor.append(all_stations[stations][1])
 
+        # Plot the trajects: the stations are shown as a circle and are connected by a segment in the same color.
         ax.plot(x_coor, y_coor, color=colors[counter], linestyle='dashed', marker='o', markersize=3)
         counter += 1
         legendnumber.append(counter) 

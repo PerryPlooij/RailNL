@@ -35,8 +35,8 @@ class Random_twice:
         bestquality = 0
         besttraject = None
 
-        # Set the runtime of the heuristic, 60 * 0.1 = runtime of 6 seconds
-        t_end = time.time() + 60 * 15
+        # Set the runtime of the heuristic, 60 * 0.1 = runtime of 6 seconds.
+        t_end = time.time() + 60 * 10
 
         while time.time() < t_end:
             maxtime = self.timeframe - 20
@@ -64,12 +64,13 @@ class Random_twice:
                         self.maketraject(city, count, maxtime)
                     count += 1
 
-                # Check if the new quality is higher than the previous quality
+                # Check if the new quality is higher than the previous quality and save this solution.
                 new_quality = quality.calculate_quality(self.connectioncopy, self.connection, self.trajects)
 
                 if new_quality > bestquality:
                     bestquality = new_quality
                     besttraject = self.trajects
+                    besttime = maxtime
 
                 maxtime += 1
 
@@ -79,7 +80,6 @@ class Random_twice:
         """
             Making a traject starts with the chosen station in 'randomsolution'. The next station of the traject is
             chosen by taking a random station of all connections. This heuristic uses every connection once or twice. 
-            
         """
 
         endtime = 0
@@ -87,12 +87,12 @@ class Random_twice:
         traject = []
         traject.append(city)
 
-        # Check if a new city can be added to the traject
+        # Check if a new city can be added to the traject.
         while time < maxtime and city in self.allconnections:
             best_stop_time = 100
             best_stop_city = ""
         
-            # Search for a new station in the cityconnections
+            # Search for a new station in the cityconnections.
             for i in range(len(self.allconnections[city])):
                 if city in self.allconnections2:
                     connection = random.choice(list(self.allconnections2[city]))
@@ -101,18 +101,18 @@ class Random_twice:
                     connection = random.choice(list(self.allconnections[city]))
                     time_traject = int(self.allconnections[city][connection])
 
-                # Add new station to the traject if the new time is less or equal to the maxtime
+                # Add new station to the traject if the new time is less or equal to the maxtime.
                 if time + time_traject <= maxtime:
                     best_stop_time = time_traject
                     best_stop_city = connection
                     break
 
-            # If new city is found set time to new time and delete connection of allconnections
+            # If new city is found set time to new time and delete connection of allconnections.
             if best_stop_city != '':
                 time += best_stop_time
                 endtime = time
 
-                # Delete city and connection of the rigth dictionary
+                # Delete city and connection of the rigth dictionary.
                 if city in self.allconnections2 and connection in self.allconnections2[city]:
                     del self.allconnections2[city][connection]
                     del self.allconnections2[connection][city]
@@ -139,7 +139,7 @@ class Random_twice:
                 endtime = time
                 time = maxtime
             
-                # Make traject with a length of at least two stations
+                # Make traject with a length of at least two stations.
                 if len(traject) == 1:
                     connections = self.connections[traject[0]]
                     endcity = min(connections, key=lambda k: connections[k])
